@@ -8,8 +8,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Sales',
-          key: 'id'
-        }
+          key: 'id',
+        },
       },
       product_id: {
         allowNull: false,
@@ -19,17 +19,17 @@ module.exports = {
         onDelete: 'CASCADE',
         references: {
           model: 'Products',
-          key: 'id'
-        }
+          key: 'id',
+        },
       },
       quantity: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
-      
     });
   },
-  down: async (queryInterface, Sequelize) => {
+
+  down: async (queryInterface, _Sequelize) => {
     await queryInterface.dropTable('Sales_Products');
-  }
+  },
 };
