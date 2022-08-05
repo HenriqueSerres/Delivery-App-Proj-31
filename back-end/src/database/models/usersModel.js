@@ -4,14 +4,14 @@ const User = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
 		name: DataTypes.STRING,
 		email: DataTypes.STRING,
 		password: DataTypes.STRING,
     role: DataTypes.STRING,
 	}, {
-		timestamps: false
+		timestamps: false,
 	});
 
 	return User;
