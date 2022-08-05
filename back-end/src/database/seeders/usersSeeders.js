@@ -1,7 +1,7 @@
 module.exports = {
   up: async (queryInterface, _Sequelize) => {
-    await queryInterface.bulkInsert('Users',
-      [{
+    await queryInterface.bulkInsert('Users',[
+      {
         id: 1,
         name: 'Delivery App Admin',
         email: 'adm@deliveryapp.com',
@@ -22,7 +22,7 @@ module.exports = {
         password: '1c37466c159755ce1fa181bd247cb925', // senha: md5('$#zebirita#$')
         role: 'customer',
       },
-      ], { timestamps: false });
+    ], { timestamps: false });
   },
 
   down: async (queryInterface, _Sequelize) => {
