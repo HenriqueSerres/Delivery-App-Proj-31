@@ -1,18 +1,18 @@
-const Prducts = (sequelize, DataTypes) => {
-	const Prducts = sequelize.define('Prducts', {
+const Products = (sequelize, DataTypes) => {
+	const Products = sequelize.define('Products', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     name: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     price: {
       allowNull: false,
-      type: DataTypes.FLOAT
+      type: DataTypes.FLOAT,
     },
     urlImage: {
       field: 'url_image',
@@ -23,7 +23,7 @@ const Prducts = (sequelize, DataTypes) => {
 		timestamps: false,
 	});
 
-	return Prducts;
+	return Products;
 };
 
-module.exports = Prducts;
+module.exports = Products;
