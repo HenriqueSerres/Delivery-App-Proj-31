@@ -1,7 +1,7 @@
 module.exports = {
   up: async (queryInterface, _Sequelize) => {
-    await queryInterface.bulkInsert('Products',
-      [{
+    await queryInterface.bulkInsert('Products', [
+      {
         id: 1,
         name: 'Skol Lata 250ml',
         price: 2.20,
@@ -67,7 +67,7 @@ module.exports = {
         price: 3.49,
         url_image: 'http://localhost:3001/images/stella_artois_275ml.jpg',
       },
-      ], { timestamps: false });
+    ], { timestamps: false });
   },
 
   down: async (queryInterface, _Sequelize) => {
