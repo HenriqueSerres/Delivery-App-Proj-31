@@ -14,7 +14,8 @@ const Prducts = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.FLOAT
     },
-    url_image: {
+    urlImage: {
+      field: 'url_image',
       allowNull: false,
       type: DataTypes.STRING,
     },
