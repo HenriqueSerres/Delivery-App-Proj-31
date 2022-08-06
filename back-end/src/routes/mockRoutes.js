@@ -30,7 +30,7 @@ const validateJwtToken = (req, res, next) => {
   }
 };
 
-routes.get('/login', async (req, res) => {
+routes.post('/login', async (req, res) => {
   const { email, password } = req.body;
   const result = await User.findOne({
     where: {
