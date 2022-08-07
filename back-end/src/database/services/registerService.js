@@ -1,11 +1,12 @@
 const { User } = require('../models');
-const handleError = require('../utils/handleError');
+const handleError = require('../../utils/handleError');
+const cryptoJs = require('crypto-js');
 
 const register = async (name, email, password, role) => {
-  
+  const hash = cryptoJs.MD5(password).toString();
   const [response, created] = await User.findOrCreate({
     where: { email },
-    defaults: { name, email, password, role },
+    defaults: { name, email, password: hash, role },
   });
   const user = response.dataValues;
   if (created === false) {
