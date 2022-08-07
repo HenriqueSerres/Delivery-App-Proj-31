@@ -1,6 +1,6 @@
-const { User } = require('../models');
-const handleError = require('../../utils/handleError');
 const cryptoJs = require('crypto-js');
+const { User } = require('../database/models');
+const handleError = require('../utils/handleError');
 
 const register = async (name, email, password, role) => {
   const hash = cryptoJs.MD5(password).toString();
