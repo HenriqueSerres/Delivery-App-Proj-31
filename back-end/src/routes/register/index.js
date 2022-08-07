@@ -1,6 +1,6 @@
 const express = require('express');
 const registerController = require('../../database/controllers/registerController');
-const registerIsValid = require('../../database/middlewares/registerIsValid');
+const registerIsValid = require('../../middlewares/registerIsValid');
 
 const registerRoutes = express.Router();
 
