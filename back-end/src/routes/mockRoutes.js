@@ -43,7 +43,7 @@ routes.post('/login', async (req, res) => {
   res.status(200).json({ ...result.dataValues, token });
 });
 
-routes.get('/register', async (req, res) => {
+routes.post('/register', async (req, res) => {
   const { name, email, password, role } = req.body;
   const [response, created] = await User.findOrCreate({
     where: { email },
