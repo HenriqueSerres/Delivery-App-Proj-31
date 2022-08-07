@@ -11,7 +11,6 @@ const loginUser = async (email, password) => {
     attributes: { exclude: ['password'] },
   });
 
-  console.log(user);
   if (!user) {
     throw handleError('400', 'User not exists');
   }

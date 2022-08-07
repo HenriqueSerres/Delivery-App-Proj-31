@@ -6,7 +6,6 @@ const register = async (req, res, next) => {
     const result = await registerService.register(name, email, password, role);
     return res.status(201).json(result);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };

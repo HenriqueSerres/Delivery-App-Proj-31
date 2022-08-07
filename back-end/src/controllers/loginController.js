@@ -6,7 +6,6 @@ const loginUser = async (req, res, next) => {
     const result = await loginService.loginUser(email, password);
     return res.status(200).json(result);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
