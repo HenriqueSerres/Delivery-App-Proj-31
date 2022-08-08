@@ -23,7 +23,11 @@ function Register() {
       role: 'customer'
     });
     if (!postRegisterInfo) return;
-    console.log(postRegisterInfo.status);
+    console.log(postRegisterInfo);
+    localStorage.setItem('userData', JSON.stringify(postRegisterInfo.data));
+    if (postRegisterInfo.status === 201) {
+      history.push('/customer/products');
+    }
   };
 
   return (
