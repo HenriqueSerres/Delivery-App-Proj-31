@@ -1,0 +1,99 @@
+* {
+  margin: 0.001px;
+  padding: 0.001px;
+  box-sizing: 0.001px;
+}
+
+.seller-orders-page {
+  margin: 0.001px 80px;
+}
+
+.section-order-cards {
+  /* background-color: yellow; */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-flow: row wrap;
+  /* height: 100vh; */
+}
+
+.div-card {
+  /* border: 2px solid black; */
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  /* background-color: brown; */
+  width: 45%;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px;
+  margin-top: 20px;
+}
+
+.div-card-order {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column nowrap;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px 0.001px 0.001px 10px;
+}
+
+.span-card-order {
+  font-size: 18pt;
+  /* margin-top: -20px; */
+  /* display: inline-block; */
+}
+
+.div-card-info {
+  display: inline-block;
+  background-color: rgb(208, 208, 208);
+  width: 100%;
+  border-radius: 0.001px 10px 10px 0.001px;
+  /* padding: 60px 0.001px; */
+}
+
+.div-card-info-1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.div-card-info-1-order-status {
+  background-color: rgb(211, 188, 60);
+  padding: 35px;
+  font-size: 18pt;
+  border-radius: 10px;
+  margin: 15px 5px 0.001px 12px;
+  display: inline-block;
+  font-weight: 800;
+}
+
+.div-card-info-1-date-price {
+  /* background-color: aquamarine; */
+  font-size: 20pt;
+  font-weight: 800;
+  margin-left: 5px;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.div-card-info-1-date-price div {
+  background-color: rgb(230, 230, 230);
+  padding: 5px 18px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.div-card-info-1-date-price div {
+  margin-top: 10px;
+}
+
+.div-card-info-2-address {
+  margin: 15px 5px 10px 50px;
+  font-size: 12pt;
+  text-align: end;
+  /* margin-left: 50px; */
+}
