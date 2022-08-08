@@ -20,7 +20,9 @@ function Login() {
       password
     });
     if (!postLoginInfo) return;
-    console.log(postLoginInfo.status);
+    if (postLoginInfo.status === 200) {
+      history.push('/customer/products');
+    }
   };
 
   return (
@@ -53,7 +55,7 @@ function Login() {
           Login
         </button>
         {/* Botão Cadastro */}
-        <button type="button" onClick={() => navigate('/register')}>
+        <button type="button" onClick={() => history.push('/register')}>
           Ainda não possui conta
         </button>
       </form>
