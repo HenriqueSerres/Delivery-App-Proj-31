@@ -30,7 +30,7 @@ const validateJwtToken = (req, res, next) => {
   }
 };
 
-routes.get('/login', async (req, res) => {
+routes.post('/login', async (req, res) => {
   const { email, password } = req.body;
   const result = await User.findOne({
     where: {
@@ -43,7 +43,7 @@ routes.get('/login', async (req, res) => {
   res.status(200).json({ ...result.dataValues, token });
 });
 
-routes.get('/register', async (req, res) => {
+routes.post('/register', async (req, res) => {
   const { name, email, password, role } = req.body;
   const [response, created] = await User.findOrCreate({
     where: { email },
