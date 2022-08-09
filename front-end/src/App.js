@@ -5,11 +5,11 @@ import SellerOrders from './pages/SellerOrders';
 
 function App() {
   return (
-    <div>
+    <main>
       <Switch>
-        <Route path="/seller/orders"component={ SellerOrders } />
+        <Route path="/seller/orders" component={ SellerOrders } />
       </Switch>
-    </div>
+    </main>
   );
 }
 
