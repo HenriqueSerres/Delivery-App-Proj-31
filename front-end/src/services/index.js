@@ -12,8 +12,9 @@ const setOptions = (url, method, data) => ({
   data
 });
 
-export const getAxiosRequest = () => {
-  const userData = JSON.parse(localStorage.getItem('userData'));
+export const getAxiosRequest = async () => {
+  const userData = await JSON.parse(localStorage.getItem('userData'));
+  if (!userData) return;
   const token = userData.token;
   return axios
     .get(URL_PRODUCTS, {
