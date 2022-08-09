@@ -6,14 +6,15 @@ const setOptions = (url, method, data) => ({
   headers: {
     // "x-access-token": token,
     Accept: 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   },
-  data
+  data,
 });
 
-const axiosRequest = async (url, method, data) =>
+const axiosRequest = async (url, method, data) => {
   await axios(setOptions(url, method, data))
     .then((response) => response)
     .catch((err) => err);
+};
 
 export default axiosRequest;
