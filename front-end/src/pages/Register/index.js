@@ -1,17 +1,26 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Context from '../../context/Context';
-import Input from '../../components/Register/FormRegister/Input';
+import Input from '../../components/GenericInput';
 
-import { Container } from './styles';
+import Container from './styles';
 
 import axiosRequest from '../../services/index';
 import { URL_REGISTER } from '../../helpers/constants';
 
+const STATUS_CODE_CREATED = 201;
+
 function Register() {
-  const { name, setName, email, setEmail, password, setPassword, disabled } =
-    useContext(Context);
+  const {
+    name,
+    setName,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    disabled,
+  } = useContext(Context);
 
   const history = useHistory();
 
@@ -20,12 +29,11 @@ function Register() {
       name,
       email,
       password,
-      role: 'customer'
+      role: 'customer',
     });
     if (!postRegisterInfo) return;
-    console.log(postRegisterInfo);
     localStorage.setItem('userData', JSON.stringify(postRegisterInfo.data));
-    if (postRegisterInfo.status === 201) {
+    if (postRegisterInfo.status === STATUS_CODE_CREATED) {
       history.push('/customer/products');
     }
   };
@@ -40,8 +48,8 @@ function Register() {
           type="text"
           dataTestId="common_register__input-name"
           placeholder="Seu nome"
-          value={name}
-          onChange={({ target }) => setName(target.value)}
+          value={ name }
+          onChange={ ({ target }) => setName(target.value) }
         />
         {/* Email */}
         <Input
@@ -49,8 +57,8 @@ function Register() {
           type="email"
           dataTestId="common_register__input-email"
           placeholder="seu email@trybeer.com.br"
-          value={email}
-          onChange={({ target }) => setEmail(target.value)}
+          value={ email }
+          onChange={ ({ target }) => setEmail(target.value) }
         />
         {/* Password */}
         <Input
@@ -58,11 +66,11 @@ function Register() {
           type="password"
           dataTestId="common_register__input-password"
           placeholder="********"
-          value={password}
-          onChange={({ target }) => setPassword(target.value)}
+          value={ password }
+          onChange={ ({ target }) => setPassword(target.value) }
         />
         {/* Botão Login */}
-        <button type="button" disabled={disabled} onClick={() => handleClick()}>
+        <button type="button" disabled={ disabled } onClick={ () => handleClick() }>
           Cadastrar
         </button>
         <p data-testid="common_register__element-invalid_register" />
