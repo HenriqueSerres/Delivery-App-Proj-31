@@ -10,16 +10,19 @@ import axiosRequest from '../../services/index';
 import { URL_LOGIN } from '../../helpers/constants';
 
 function Login() {
-  const { email, setEmail, password, setPassword, disabled } = useContext(Context);
+  const { emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, disabledLogin } =
+    useContext(Context);
 
   const history = useHistory();
 
   const handleClick = async () => {
     const postLoginInfo = await axiosRequest(URL_LOGIN, 'POST', {
-      email,
-      password
+      email: emailLogin,
+      password: passwordLogin
     });
     if (!postLoginInfo) return;
+    const { name, email, role, token } = postLoginInfo.data;
+    localStorage.setItem('userData', JSON.stringify({ name, email, role, token }));
     if (postLoginInfo.status === 200) {
       history.push('/customer/products');
     }
@@ -38,8 +41,8 @@ function Login() {
           type="email"
           dataTestId="common_login__input-email"
           placeholder="email@trybeer.com.br"
-          value={email}
-          onChange={({ target }) => setEmail(target.value)}
+          value={emailLogin}
+          onChange={({ target }) => setEmailLogin(target.value)}
         />
         {/* Password */}
         <Input
@@ -47,11 +50,11 @@ function Login() {
           type="password"
           dataTestId="common_login__input-password"
           placeholder="********"
-          value={password}
-          onChange={({ target }) => setPassword(target.value)}
+          value={passwordLogin}
+          onChange={({ target }) => setPasswordLogin(target.value)}
         />
         {/* Botão Login */}
-        <button type="button" disabled={disabled} onClick={() => handleClick()}>
+        <button type="button" disabled={disabledLogin} onClick={() => handleClick()}>
           Login
         </button>
         {/* Botão Cadastro */}
