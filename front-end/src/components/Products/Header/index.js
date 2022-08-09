@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Context from '../../../context/Context';
 
-import { Container } from './styles';
+import Container from './styles';
 
 function Header() {
   const { name } = useContext(Context);
