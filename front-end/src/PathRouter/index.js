@@ -8,10 +8,10 @@ import Products from '../pages/Products';
 function PathRouter() {
   return (
     <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/register" component={Register} />
-      <Route path="/customer/products" component={Products} />
-      <Route exact path="/" component={Login} />
+      <Route path="/login" component={ Login } />
+      <Route path="/register" component={ Register } />
+      <Route path="/customer/products" component={ Products } />
+      <Route exact path="/" component={ Login } />
     </Switch>
   );
 }
