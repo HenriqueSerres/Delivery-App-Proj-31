@@ -1,13 +1,15 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Context from '../../context/Context';
-import Input from '../../components/Login/Input';
+import Input from '../../components/GenericInput';
 
-import { Container } from './styles';
+import Container from './styles';
 
 import axiosRequest from '../../services/index';
 import { URL_LOGIN } from '../../helpers/constants';
+
+const STATUS_CODE_OK = 200;
 
 function Login() {
   const { email, setEmail, password, setPassword, disabled } = useContext(Context);
@@ -17,10 +19,10 @@ function Login() {
   const handleClick = async () => {
     const postLoginInfo = await axiosRequest(URL_LOGIN, 'POST', {
       email,
-      password
+      password,
     });
     if (!postLoginInfo) return;
-    if (postLoginInfo.status === 200) {
+    if (postLoginInfo.status === STATUS_CODE_OK) {
       history.push('/customer/products');
     }
   };
@@ -38,8 +40,8 @@ function Login() {
           type="email"
           dataTestId="common_login__input-email"
           placeholder="email@trybeer.com.br"
-          value={email}
-          onChange={({ target }) => setEmail(target.value)}
+          value={ email }
+          onChange={ ({ target }) => setEmail(target.value) }
         />
         {/* Password */}
         <Input
@@ -47,15 +49,15 @@ function Login() {
           type="password"
           dataTestId="common_login__input-password"
           placeholder="********"
-          value={password}
-          onChange={({ target }) => setPassword(target.value)}
+          value={ password }
+          onChange={ ({ target }) => setPassword(target.value) }
         />
         {/* Botão Login */}
-        <button type="button" disabled={disabled} onClick={() => handleClick()}>
+        <button type="button" disabled={ disabled } onClick={ () => handleClick() }>
           Login
         </button>
         {/* Botão Cadastro */}
-        <button type="button" onClick={() => history.push('/register')}>
+        <button type="button" onClick={ () => history.push('/register') }>
           Ainda não possui conta
         </button>
       </form>
