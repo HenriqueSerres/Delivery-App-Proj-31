@@ -3,12 +3,12 @@ import OrderCard from '../components/OrderCard';
 // import fetchAllOrders from '../services/fetchOrders';
 import '../styles/sellerOrders.css';
 
-const SellerOrders = () => {
-  let orders = [];
+function SellerOrders() {
+  const orders = [];
   // fetchAllOrders('http://localhost:3001/mock/orders', 'token').then((data) => {
   //   orders = data;
   // });
-  return(
+  return (
     <section className="seller-orders-page">
       <span>Tela de pedidos do Vendedor</span>
       <br />
@@ -17,6 +17,7 @@ const SellerOrders = () => {
         {
           orders.map(({ id, status, saleDate, totalPrice, deliveryAddress }) => (
             <OrderCard
+              key={ id }
               order={ `Pedido ${id}` }
               status={ status }
               orderDate={ saleDate }
@@ -29,7 +30,7 @@ const SellerOrders = () => {
       <br />
       <br />
     </section>
-  )
+  );
 }
 
 export default SellerOrders;
