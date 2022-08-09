@@ -7,10 +7,13 @@ import Header from '../../components/Products/Header';
 import { Container, BoxProducts } from './styles';
 import ProductsItem from '../../components/Products/ProductsItem';
 import Context from '../../context/Context';
+import { useHistory } from 'react-router-dom';
 
 function Products() {
   const [productsData, setProductsData] = useState([]);
   const { total, shoppingCart, setShoppingCart } = useContext(Context);
+
+  const history = useHistory();
 
   useEffect(() => {
     const getInfoProducts = async () => {
