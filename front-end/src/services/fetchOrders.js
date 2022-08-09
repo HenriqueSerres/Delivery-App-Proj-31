@@ -2,7 +2,7 @@ const headers = {
   authorization: '',
 };
 
-const init = { 
+const init = {
   method: 'GET',
   headers,
   mode: 'cors',
@@ -19,6 +19,6 @@ const fetchAllOrders = async (url, token) => {
     console.log('ERROR: Erro na função "fetchOrders"');
     console.log(error.message);
   }
-}
+};
 
 export default fetchAllOrders;
