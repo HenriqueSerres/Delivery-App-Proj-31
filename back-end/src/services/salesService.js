@@ -1,24 +1,7 @@
 const { Sales, User, Products } = require('../database/models');
+const identifyUser = require('../utils/indentifyUser');
 
-const identifyUser = (genericUserId, role) => {
-  const queryParameters = {};
-  switch (role) {
-    case 'customer':
-      queryParameters.userId = genericUserId;
-      break;
-    
-    case 'seller':
-      queryParameters.sellerId = genericUserId;
-      break;
-  
-    default:
-      queryParameters.id = '';
-      break;
-  }
-  return queryParameters;
-};
-
-const filterAllSales = async (id, role) => {
+const filterAllOrders = async (id, role) => {
   const queryParameters = identifyUser(id, role);
   const result = await Sales.findAll({
     where: queryParameters,
@@ -29,9 +12,9 @@ const filterAllSales = async (id, role) => {
       { model: Products, as: 'products', through: { attributes: [] } },
     ],
   });
-  return result;
+  return result.dataValues;
 };
 
 module.exports = {
-  filterAllSales,
+  filterAllOrders,
 };
