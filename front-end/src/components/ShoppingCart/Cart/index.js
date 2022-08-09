@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // import { Container } from './styles';
 
-function Cart() {
+function Cart({ item }) {
+  console.log(item);
+
+  useEffect(() => {
+    const { name, quantity, price } = item;
+  }, []);
+
   return (
     <Container>
       <h3>Finalizar Pedido</h3>
@@ -20,12 +26,12 @@ function Cart() {
         <tbody>
           <tr>
             <td>{id}</td>
-            <td>{description}</td>
+            <td>{name}</td>
             <td>{quantity}</td>
             <td>{unityValue}</td>
             <td>{subTotal}</td>
             <td>
-              <button type="button" onClick={ () => handleClick() }>
+              <button type="button" onClick={() => handleClick()}>
                 Remover
               </button>
             </td>

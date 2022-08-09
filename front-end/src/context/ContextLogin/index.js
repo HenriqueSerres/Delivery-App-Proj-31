@@ -3,9 +3,9 @@ import validateEmail from '../../helpers/data';
 import { MIN_LENGTH_LOGIN } from '../../helpers/constants';
 
 const ContextLogin = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [disabled, setDisabled] = useState(true);
+  const [emailLogin, setEmailLogin] = useState('');
+  const [passwordLogin, setPasswordLogin] = useState('');
+  const [disabledLogin, setDisabledLogin] = useState(true);
 
   useEffect(() => {
     const emailCheck = validateEmail(email);
@@ -15,14 +15,14 @@ const ContextLogin = () => {
     } else {
       setDisabled(true);
     }
-  }, [email, password]);
+  }, [emailLogin, passwordLogin]);
 
   const contextLoginObj = {
-    setEmail,
-    email,
-    setPassword,
-    password,
-    disabled,
+    emailLogin,
+    setEmailLogin,
+    passwordLogin,
+    setPasswordLogin,
+    disabledLogin
   };
 
   return { contextLoginObj };

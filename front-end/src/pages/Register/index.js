@@ -13,26 +13,28 @@ const STATUS_CODE_CREATED = 201;
 
 function Register() {
   const {
-    name,
-    setName,
-    email,
-    setEmail,
-    password,
-    setPassword,
-    disabled,
+    nameRegister,
+    setNameRegister,
+    emailRegister,
+    setEmailRegister,
+    passwordRegister,
+    setPasswordRegister,
+    disabledRegister,
   } = useContext(Context);
 
   const history = useHistory();
 
   const handleClick = async () => {
     const postRegisterInfo = await axiosRequest(URL_REGISTER, 'POST', {
-      name,
-      email,
-      password,
-      role: 'customer',
+      name: nameRegister,
+      email: emailRegister,
+      password: passwordRegister,
+      role: 'customer'
     });
     if (!postRegisterInfo) return;
-    localStorage.setItem('userData', JSON.stringify(postRegisterInfo.data));
+    const { name, email, role, token } = postRegisterInfo.data;
+    localStorage.setItem('userData', JSON.stringify({ name, email, role, token }));
+
     if (postRegisterInfo.status === STATUS_CODE_CREATED) {
       history.push('/customer/products');
     }
@@ -48,8 +50,8 @@ function Register() {
           type="text"
           dataTestId="common_register__input-name"
           placeholder="Seu nome"
-          value={ name }
-          onChange={ ({ target }) => setName(target.value) }
+          value={ nameRegister }
+          onChange={ ({ target }) => setNameRegister(target.value) }
         />
         {/* Email */}
         <Input
@@ -57,8 +59,8 @@ function Register() {
           type="email"
           dataTestId="common_register__input-email"
           placeholder="seu email@trybeer.com.br"
-          value={ email }
-          onChange={ ({ target }) => setEmail(target.value) }
+          value={ emailRegister }
+          onChange={ ({ target }) => setEmailRegister(target.value) }
         />
         {/* Password */}
         <Input
@@ -66,11 +68,11 @@ function Register() {
           type="password"
           dataTestId="common_register__input-password"
           placeholder="********"
-          value={ password }
-          onChange={ ({ target }) => setPassword(target.value) }
+          value={ passwordRegister }
+          onChange={ ({ target }) => setPasswordRegister(target.value) }
         />
         {/* Botão Login */}
-        <button type="button" disabled={ disabled } onClick={ () => handleClick() }>
+        <button type="button" disabled={ disabledRegister } onClick={ () => handleClick() }>
           Cadastrar
         </button>
         <p data-testid="common_register__element-invalid_register" />

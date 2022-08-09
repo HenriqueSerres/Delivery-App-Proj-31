@@ -1,24 +1,46 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import Context from '../../../context/Context';
 
 import Container from './styles';
 
 function Header() {
-  const { name } = useContext(Context);
+  const [name, setName] = useState('');
+
+  const history = useHistory();
+
+  useEffect(() => {
+    const getFromLocal = JSON.parse(localStorage.getItem('userData'));
+    setName(getFromLocal !== null ? getFromLocal.name : '');
+  }, []);
+
   return (
     <Container>
       {/* Header */}
       {/* Produtos */}
-      <h3 data-testid="customer_products__element-navbar-link-products">Produtos</h3>
+      <button
+        type="button"
+        data-testid="customer_products__element-navbar-link-products"
+        onClick={() => history.push('/')}
+      >
+        Produtos
+      </button>
       {/* Meus Pedidos */}
-      <h3 data-testid="customer_products__element-navbar-link-orders">Meus Pedidos</h3>
+      <button
+        type="button"
+        data-testid="customer_products__element-navbar-link-orders"
+        onClick={() => history.push('/')}
+      >
+        Meus Pedidos
+      </button>
       {/* Usuário */}
       <h3 data-testid="customer_products__element-navbar-user-full-name">{name}</h3>
       {/* Sair */}
       <button
         data-testid="customer_products__element-navbar-link-logout"
         type="button"
-        onClick={ () => navigate('/') }
+        onClick={() => navigate('/')}
       >
         sair
       </button>

@@ -3,10 +3,10 @@ import validateEmail from '../../helpers/data';
 import { MIN_LENGTH_LOGIN } from '../../helpers/constants';
 
 const ContextLogin = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [disabled, setDisabled] = useState(true);
+  const [nameRegister, setNameRegister] = useState('');
+  const [emailRegister, setEmailRegister] = useState('');
+  const [passwordRegister, setPasswordRegister] = useState('');
+  const [disabledRegister, setDisabledRegister] = useState(true);
 
   useEffect(() => {
     // const nameCheck = name.length >= 2 * MIN_LENGTH_LOGIN;
@@ -17,16 +17,16 @@ const ContextLogin = () => {
     } else {
       setDisabled(true);
     }
-  }, [email, password]);
+  }, [emailRegister, passwordRegister]);
 
   const contextRegisterObj = {
-    setName,
-    name,
-    setEmail,
-    email,
-    setPassword,
-    password,
-    disabled,
+    nameRegister,
+    setNameRegister,
+    emailRegister,
+    setEmailRegister,
+    passwordRegister,
+    setPasswordRegister,
+    disabledRegister
   };
 
   return { contextRegisterObj };
