@@ -17,7 +17,23 @@ const filterAllOrders = async (id, role) => {
       { model: Products, as: 'products', through: { attributes: [] } },
     ],
   });
-  return result.dataValues;
+  return result;
+};
+
+const filterUserOrderbyId = async (orderId, data) => {
+  const { id, role } = data;
+  const queryParameters = identifyUser(id, role);
+  queryParameters.id = orderId;
+  const certainOrder = await Sales.findOne({
+    where: queryParameters,
+    attributes: { exclude: ['userId', 'sallerId'] },
+    include: [
+      { model: User, as: 'saller', attributes: { exclude: ['password', 'email'] } },
+      { model: User, as: 'user', attributes: { exclude: ['password', 'email'] } },
+      { model: Products, as: 'products', through: { attributes: [] } },
+    ],
+  });
+  return certainOrder;
 };
 
 const addNewOrder = async (id, role, body) => {
@@ -51,4 +67,5 @@ module.exports = {
   filterAllOrders,
   addNewOrder,
   getAllSallers,
+  filterUserOrderbyId,
 };
