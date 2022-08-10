@@ -6,7 +6,7 @@ import Input from '../../components/GenericInput';
 
 import Container from './styles';
 
-import axiosRequest from '../../services/index';
+import { axiosRequest } from '../../services/index';
 import { URL_REGISTER } from '../../helpers/constants';
 
 const STATUS_CODE_CREATED = 201;
@@ -29,7 +29,7 @@ function Register() {
       name: nameRegister,
       email: emailRegister,
       password: passwordRegister,
-      role: 'customer'
+      role: 'customer',
     });
     if (!postRegisterInfo) return;
     const { name, email, role, token } = postRegisterInfo.data;
@@ -72,7 +72,11 @@ function Register() {
           onChange={ ({ target }) => setPasswordRegister(target.value) }
         />
         {/* Botão Login */}
-        <button type="button" disabled={ disabledRegister } onClick={ () => handleClick() }>
+        <button
+          type="button"
+          disabled={ disabledRegister }
+          onClick={ () => handleClick() }
+        >
           Cadastrar
         </button>
         <p data-testid="common_register__element-invalid_register" />
