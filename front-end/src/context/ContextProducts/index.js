@@ -11,12 +11,52 @@ function ContextProducts() {
       setProductsData(getData);
     };
     getInfoProducts();
-  }, [productsData]);
+  }, []);
+
+  const totalPrice = (cart) => {
+    const total = cart
+      .reduce((acc, curr) => {
+        return acc + Number(curr.quantity) * Number(curr.price);
+      }, 0)
+      .toFixed(2);
+    return setTotal(total);
+  };
+
+  const decreaseQuantity = (name, shoppingCart) => {
+    let store;
+    const shoppingCartNewQuantity = shoppingCart.map((item) => {
+      if (item.name === name && item.quantity !== 0) {
+        item.quantity -= 1;
+        store = item.quantity;
+      }
+      return item;
+    });
+    totalPrice(shoppingCartNewQuantity);
+    localStorage.setItem('cart', JSON.stringify(shoppingCartNewQuantity));
+    return store;
+  };
+
+  const increaseQuantity = (name, shoppingCart) => {
+    let store;
+    const shoppingCartNewQuantity = shoppingCart.map((item) => {
+      if (item.name === name) {
+        item.quantity += 1;
+        store = item.quantity;
+      }
+      return item;
+    });
+    totalPrice(shoppingCartNewQuantity);
+    localStorage.setItem('cart', JSON.stringify(shoppingCartNewQuantity));
+    return store;
+  };
 
   const contextProductsObj = {
     productsData,
     total,
-    setTotal
+    setTotal,
+    decreaseQuantity,
+    increaseQuantity,
+    totalPrice
   };
 
   return { contextProductsObj };
