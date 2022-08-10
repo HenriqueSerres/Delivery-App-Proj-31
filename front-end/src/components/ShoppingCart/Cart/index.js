@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Container } from './styles';
 
@@ -23,16 +24,24 @@ function Cart({ id, name, quantity, price }) {
             <td>{quantity}</td>
             <td>{price}</td>
             <td>{quantity * price}</td>
-            <td>
-              <button type="button" onClick={() => handleClick()}>
-                Remover
-              </button>
-            </td>
+            <button
+              type="button"
+              onClick={ () => handleClick() }
+            >
+              Remover
+            </button>
           </tr>
         </tbody>
       </table>
     </Container>
   );
 }
+
+Cart.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  quantity: PropTypes.number,
+  price: PropTypes.number,
+}.isRequired;
 
 export default Cart;
