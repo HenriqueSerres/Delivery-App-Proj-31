@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { getAxiosRequest } from '../../services';
+
+const calculateTotalPrice = (cart) => cart
+  .reduce((acc, curr) => acc + Number(curr.quantity) * Number(curr.price), 0)
+  .toFixed(2);
 
 function ContextProducts() {
   const [productsData, setProductsData] = useState([]);
@@ -13,14 +17,7 @@ function ContextProducts() {
     getInfoProducts();
   }, []);
 
-  const totalPrice = (cart) => {
-    const total = cart
-      .reduce((acc, curr) => {
-        return acc + Number(curr.quantity) * Number(curr.price);
-      }, 0)
-      .toFixed(2);
-    return setTotal(total);
-  };
+  const totalPrice = (cart) => setTotal(calculateTotalPrice(cart));
 
   const decreaseQuantity = (name, shoppingCart) => {
     let store;
@@ -56,8 +53,7 @@ function ContextProducts() {
     setTotal,
     decreaseQuantity,
     increaseQuantity,
-    totalPrice
-  };
+    totalPrice };
 
   return { contextProductsObj };
 }
