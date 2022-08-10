@@ -22,21 +22,20 @@ const filterAllOrders = async (id, role) => {
 
 const addNewOrder = async (id, role, body) => {
   const { sallerId, products, ...payload } = body;
-  console.log('XXXXXX');
-  console.log(role);
   if (role !== 'customer') throw handleError(401, 'Unauthorized');
-  const order = { userId: id, ...payload };
+  const order = { userId: id, sallerId, products, ...payload };
   const t = await sequelize.transaction();
   try {
     const newOrder = await Sales.create(order, { transaction: t });
     await SalesProducts.bulkCreate(products
-      .map((product) => ({ sallerId, productId: product.id, quantity: product.quantity })),
+      .map((product) => ({ 
+        saleId: newOrder.id, productId: product.id, quantity: product.quantity })),
       { transaction: t });
     await t.commit();
     return newOrder;
   } catch (error) {
     await t.rollback();
-    console.log(error.message);
+    throw handleError(400, 'Bad Request');
   }  
 };
 
