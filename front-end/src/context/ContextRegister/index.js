@@ -9,13 +9,12 @@ const ContextLogin = () => {
   const [disabledRegister, setDisabledRegister] = useState(true);
 
   useEffect(() => {
-    // const nameCheck = name.length >= 2 * MIN_LENGTH_LOGIN;
-    const emailCheck = validateEmail(email);
-    const passwordCheck = password.length >= MIN_LENGTH_LOGIN;
+    const emailCheck = validateEmail(emailRegister);
+    const passwordCheck = passwordRegister.length >= MIN_LENGTH_LOGIN;
     if (emailCheck && passwordCheck) {
-      setDisabled(false);
+      setDisabledRegister(false);
     } else {
-      setDisabled(true);
+      setDisabledRegister(true);
     }
   }, [emailRegister, passwordRegister]);
 
@@ -26,7 +25,7 @@ const ContextLogin = () => {
     setEmailRegister,
     passwordRegister,
     setPasswordRegister,
-    disabledRegister
+    disabledRegister,
   };
 
   return { contextRegisterObj };
