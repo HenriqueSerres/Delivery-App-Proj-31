@@ -8,12 +8,12 @@ const ContextLogin = () => {
   const [disabledLogin, setDisabledLogin] = useState(true);
 
   useEffect(() => {
-    const emailCheck = validateEmail(email);
-    const passwordCheck = password.length >= MIN_LENGTH_LOGIN;
+    const emailCheck = validateEmail(emailLogin);
+    const passwordCheck = passwordLogin.length >= MIN_LENGTH_LOGIN;
     if (emailCheck && passwordCheck) {
-      setDisabled(false);
+      setDisabledLogin(false);
     } else {
-      setDisabled(true);
+      setDisabledLogin(true);
     }
   }, [emailLogin, passwordLogin]);
 
@@ -22,7 +22,7 @@ const ContextLogin = () => {
     setEmailLogin,
     passwordLogin,
     setPasswordLogin,
-    disabledLogin
+    disabledLogin,
   };
 
   return { contextLoginObj };
