@@ -6,31 +6,16 @@ import { Container } from './styles';
 function ProductsItem({ product }) {
   const { id, price, name, urlImage } = product;
 
-  const { shoppingCart, setShoppingCart, setTotal } = useContext(Context);
-
   const [value, setValue] = useState(0);
 
-  const totalPrice = (cart) => {
-    const total = cart
-      .reduce((acc, curr) => {
-        return acc + Number(curr.quantity) * Number(curr.price);
-      }, 0)
-      .toFixed(2);
-    return setTotal(total);
-  };
-
-  const decreaseQuantity = (name) => {
-    const shoppingCartNewQuantity = shoppingCart.map((item) => {
-      if (item.name === name && item.quantity !== 0) {
-        item.quantity -= 1;
-        setValue(item.quantity);
-      }
-      return item;
-    });
-    totalPrice(shoppingCartNewQuantity);
-    localStorage.setItem('cart', JSON.stringify(shoppingCartNewQuantity));
-    return;
-  };
+  const {
+    increaseQuantity,
+    decreaseQuantity,
+    shoppingCart,
+    setShoppingCart,
+    setTotal,
+    totalPrice
+  } = useContext(Context);
 
   const handleChange = (name, { value }) => {
     const shoppingCartNewQuantity = shoppingCart.map((item) => {
@@ -40,20 +25,8 @@ function ProductsItem({ product }) {
       }
       return item;
     });
+    console.log(1);
     totalPrice(shoppingCartNewQuantity);
-  };
-
-  const increaseQuantity = (name) => {
-    const shoppingCartNewQuantity = shoppingCart.map((item) => {
-      if (item.name === name) {
-        item.quantity += 1;
-        setValue(item.quantity);
-      }
-      return item;
-    });
-    totalPrice(shoppingCartNewQuantity);
-    localStorage.setItem('cart', JSON.stringify(shoppingCartNewQuantity));
-    return;
   };
 
   return (
@@ -75,7 +48,7 @@ function ProductsItem({ product }) {
         <button
           type="button"
           data-testid={`customer_products__button-card-rm-item-${id}`}
-          onClick={() => decreaseQuantity(name)}
+          onClick={() => setValue(decreaseQuantity(name, shoppingCart))}
         >
           -
         </button>
@@ -89,7 +62,7 @@ function ProductsItem({ product }) {
         <button
           type="button"
           data-testid={`customer_products__button-card-add-item-${id}`}
-          onClick={() => increaseQuantity(name)}
+          onClick={() => setValue(increaseQuantity(name, shoppingCart))}
         >
           +
         </button>
