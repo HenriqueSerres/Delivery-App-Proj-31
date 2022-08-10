@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Context from './Context';
 import ContextLogin from './ContextLogin';
@@ -12,22 +12,25 @@ function ContextProvider({ children }) {
   const { contextShoppingCart } = ContextShoppingCart();
   const { contextProductsObj } = ContextProducts();
 
-  const context = {
+  const context = useMemo(() => ({
     ...contextLoginObj,
     ...contextRegisterObj,
     ...contextProductsObj,
-    ...contextShoppingCart
-  };
+    ...contextShoppingCart,
+  }), [contextLoginObj,
+    contextRegisterObj,
+    contextProductsObj,
+    contextShoppingCart]);
 
-  return <Context.Provider value={context}>{children}</Context.Provider>;
+  return <Context.Provider value={ context }>{children}</Context.Provider>;
 }
 
 ContextProvider.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element,
 };
 
 ContextProvider.defaultProps = {
-  children: <>default</>
+  children: <>default</>,
 };
 
 export default ContextProvider;
