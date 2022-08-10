@@ -1,17 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 
-// import { Container } from './styles';
+import { Container } from './styles';
 
-function Cart({ item }) {
-  console.log(item);
-
-  useEffect(() => {
-    const { name, quantity, price } = item;
-  }, []);
-
+function Cart({ id, name, quantity, price }) {
   return (
     <Container>
-      <h3>Finalizar Pedido</h3>
       <table>
         <thead>
           <tr>
@@ -28,8 +21,8 @@ function Cart({ item }) {
             <td>{id}</td>
             <td>{name}</td>
             <td>{quantity}</td>
-            <td>{unityValue}</td>
-            <td>{subTotal}</td>
+            <td>{price}</td>
+            <td>{quantity * price}</td>
             <td>
               <button type="button" onClick={() => handleClick()}>
                 Remover
@@ -38,10 +31,6 @@ function Cart({ item }) {
           </tr>
         </tbody>
       </table>
-      <h2>
-        Total:
-        {total}
-      </h2>
     </Container>
   );
 }
