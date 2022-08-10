@@ -10,7 +10,6 @@ const findOrders = async (req, res, next) => {
   }
 };
 
-
 const addNewOrder = async (req, res, next) => {
   try {
     const { id, role } = req.user.data;
