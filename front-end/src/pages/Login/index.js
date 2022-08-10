@@ -6,23 +6,29 @@ import Input from '../../components/GenericInput';
 
 import Container from './styles';
 
-import axiosRequest from '../../services/index';
+import { axiosRequest } from '../../services/index';
 import { URL_LOGIN } from '../../helpers/constants';
 
 const STATUS_CODE_OK = 200;
 
 function Login() {
-  const { emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, disabledLogin } =
-    useContext(Context);
+  const {
+    emailLogin,
+    setEmailLogin,
+    passwordLogin,
+    setPasswordLogin,
+    disabledLogin,
+  } = useContext(Context);
 
   const history = useHistory();
 
   const handleClick = async () => {
     const postLoginInfo = await axiosRequest(URL_LOGIN, 'POST', {
       email: emailLogin,
-      password: passwordLogin
+      password: passwordLogin,
     });
     if (!postLoginInfo) return;
+    console.log(postLoginInfo);
     const { name, email, role, token } = postLoginInfo.data;
     localStorage.setItem('userData', JSON.stringify({ name, email, role, token }));
     if (postLoginInfo.status === STATUS_CODE_OK) {
