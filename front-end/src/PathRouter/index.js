@@ -9,11 +9,11 @@ import ShoppingCart from '../pages/ShoppingCart';
 function PathRouter() {
   return (
     <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/register" component={Register} />
-      <Route path="/customer/products" component={Products} />
+      <Route path="/login" component={ Login } />
+      <Route path="/register" component={ Register } />
+      <Route path="/customer/products" component={ Products } />
       <Route path="/customer/checkout" component={ShoppingCart} />
-      <Route exact path="/" component={Login} />
+      <Route exact path="/" component={ Login } />
     </Switch>
   );
 }

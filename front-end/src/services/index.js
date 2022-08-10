@@ -7,9 +7,9 @@ const setOptions = (url, method, data) => ({
   headers: {
     // "x-access-token": token,
     Accept: 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   },
-  data
+  data,
 });
 
 export const getAxiosRequest = async () => {

@@ -8,9 +8,13 @@ const ContextLogin = () => {
   const [disabledLogin, setDisabledLogin] = useState(true);
 
   useEffect(() => {
-    const emailCheck = validateEmail(emailLogin);
-    const passwordCheck = passwordLogin.length >= MIN_LENGTH_LOGIN;
-    emailCheck && passwordCheck ? setDisabledLogin(false) : setDisabledLogin(true);
+    const emailCheck = validateEmail(email);
+    const passwordCheck = password.length >= MIN_LENGTH_LOGIN;
+    if (emailCheck && passwordCheck) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
   }, [emailLogin, passwordLogin]);
 
   const contextLoginObj = {

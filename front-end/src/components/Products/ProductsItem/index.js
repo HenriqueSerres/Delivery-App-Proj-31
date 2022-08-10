@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Context from '../../../context/Context';
 
-import { Container } from './styles';
+import Container from './styles';
 
 function ProductsItem({ product }) {
   const { id, price, name, urlImage } = product;

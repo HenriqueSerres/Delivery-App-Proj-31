@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import Context from '../../../context/Context';
 
-import { Container } from './styles';
+import Container from './styles';
 
 function Header() {
   const [name, setName] = useState('');
