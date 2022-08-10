@@ -10,6 +10,25 @@ const findOrders = async (req, res, next) => {
   }
 };
 
+const addNewOrder = async (req, res, next) => {
+  try {
+    const { id, role } = req.user.data;
+    const newOrder = await salesService.addNewOrder(id, role, req.body);
+  return res.status(200).json(newOrder);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getAllSallers = async (req, res, next) => {
+  try {
+    const sallers = await salesService.getAllSallers();
+    return res.status(200).json(sallers);
+  } catch (error) {
+    next(error);
+  }
+};
+    
 const findAnUserOrder = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -23,5 +42,7 @@ const findAnUserOrder = async (req, res, next) => {
 
 module.exports = {
   findOrders,
+  addNewOrder,
+  getAllSallers,
   findAnUserOrder,
 };
