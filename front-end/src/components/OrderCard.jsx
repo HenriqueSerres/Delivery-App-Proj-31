@@ -21,13 +21,13 @@ function OrderCard({
       </div>
       <div className="div-card-info">
         <div className="div-card-info-1">
-          <div className="div-card-info-1-order-status">
+          <div className="div-card-info-1-order-status" style={ { backgroundColor: 'red' } }>
             <span
               data-testid={
                 `seller_orders__element-delivery-status-${dataTestIdOrderId}`
               }
             >
-              { status }
+              { status.toUpperCase() }
             </span>
           </div>
           <div className="div-card-info-1-date-price">
@@ -39,7 +39,7 @@ function OrderCard({
             <div
               data-testid={ `seller_orders__element-card-price-${dataTestIdOrderId}` }
             >
-              { totalPrice }
+              { totalPrice.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }
             </div>
           </div>
         </div>
