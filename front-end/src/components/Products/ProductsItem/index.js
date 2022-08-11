@@ -1,95 +1,68 @@
 import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
+
 import Context from '../../../context/Context';
 
-import Container from './styles';
+import { Container } from './styles';
 
 function ProductsItem({ product }) {
   const { id, price, name, urlImage } = product;
 
-  const { shoppingCart, setShoppingCart, setTotal } = useContext(Context);
+  const [valuePrice, setValuePrice] = useState(0);
 
-  const [value, setValue] = useState(0);
+  const {
+    increaseQuantity,
+    decreaseQuantity,
+    shoppingCart,
+    totalPrice,
+  } = useContext(Context);
 
-  const totalPrice = (cart) => {
-    const total = cart
-      .reduce((acc, curr) => {
-        return acc + Number(curr.quantity) * Number(curr.price);
-      }, 0)
-      .toFixed(2);
-    return setTotal(total);
-  };
-
-  const decreaseQuantity = (name) => {
-    const shoppingCartNewQuantity = shoppingCart.map((item) => {
-      if (item.name === name && item.quantity !== 0) {
-        item.quantity -= 1;
-        setValue(item.quantity);
-      }
-      return item;
-    });
-    totalPrice(shoppingCartNewQuantity);
-    localStorage.setItem('cart', JSON.stringify(shoppingCartNewQuantity));
-    return;
-  };
-
-  const handleChange = (name, { value }) => {
+  const handleChange = ({ value }) => {
     const shoppingCartNewQuantity = shoppingCart.map((item) => {
       if (item.name === name) {
         item.quantity = Number(value);
-        setValue(item.quantity);
+        setValuePrice(item.quantity);
       }
       return item;
     });
+    console.log(1);
     totalPrice(shoppingCartNewQuantity);
-  };
-
-  const increaseQuantity = (name) => {
-    const shoppingCartNewQuantity = shoppingCart.map((item) => {
-      if (item.name === name) {
-        item.quantity += 1;
-        setValue(item.quantity);
-      }
-      return item;
-    });
-    totalPrice(shoppingCartNewQuantity);
-    localStorage.setItem('cart', JSON.stringify(shoppingCartNewQuantity));
-    return;
   };
 
   return (
     <Container>
-      {/* Imagem */}
-      {/* <img
-        src={urlImage}
+      Imagem
+      <img
+        src={ urlImage }
         alt=""
-        data-testid={`customer_products__img-card-bg-image-${id}`}
-      /> */}
+        data-testid={ `customer_products__img-card-bg-image-${id}` }
+      />
       {/* name */}
       {/* Name */}
-      <h3 data-testid={`customer_products__element-card-name-${id}`}>{name}</h3>
+      <h3 data-testid={ `customer_products__element-card-name-${id}` }>{name}</h3>
       {/* Preço */}
-      <p data-testid={`customer_products__element-card-price-${id}`}>
+      <p data-testid={ `customer_products__element-card-price-${id}` }>
         {price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
       </p>
       <article>
         <button
           type="button"
-          data-testid={`customer_products__button-card-rm-item-${id}`}
-          onClick={() => decreaseQuantity(name)}
+          data-testid={ `customer_products__button-card-rm-item-${id}` }
+          onClick={ () => setValuePrice(decreaseQuantity(name, shoppingCart)) }
         >
           -
         </button>
         <input
           type="text"
           id="input-quantity"
-          data-testid={`customer_products__input-card-quantity-${id}`}
-          value={value}
-          onChange={({ target }) => handleChange(name, target)}
+          data-testid={ `customer_products__input-card-quantity-${id}` }
+          value={ valuePrice }
+          onChange={ ({ target }) => handleChange(target) }
         />
         <button
           type="button"
-          data-testid={`customer_products__button-card-add-item-${id}`}
-          onClick={() => increaseQuantity(name)}
+          data-testid={ `customer_products__button-card-add-item-${id}` }
+          onClick={ () => setValuePrice(increaseQuantity(name, shoppingCart)) }
         >
           +
         </button>
@@ -97,5 +70,12 @@ function ProductsItem({ product }) {
     </Container>
   );
 }
+
+ProductsItem.propTypes = {
+  id: PropTypes.number,
+  price: PropTypes.number,
+  name: PropTypes.string,
+  urlImage: PropTypes.string,
+}.isRequired;
 
 export default ProductsItem;

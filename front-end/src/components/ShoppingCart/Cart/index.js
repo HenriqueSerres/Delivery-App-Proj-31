@@ -1,17 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-// import { Container } from './styles';
+import { Container } from './styles';
 
-function Cart({ item }) {
-  console.log(item);
-
-  useEffect(() => {
-    const { name, quantity, price } = item;
-  }, []);
-
+function Cart({ id, name, quantity, price }) {
   return (
     <Container>
-      <h3>Finalizar Pedido</h3>
       <table>
         <thead>
           <tr>
@@ -28,22 +22,26 @@ function Cart({ item }) {
             <td>{id}</td>
             <td>{name}</td>
             <td>{quantity}</td>
-            <td>{unityValue}</td>
-            <td>{subTotal}</td>
-            <td>
-              <button type="button" onClick={() => handleClick()}>
-                Remover
-              </button>
-            </td>
+            <td>{price}</td>
+            <td>{quantity * price}</td>
+            <button
+              type="button"
+              onClick={ () => handleClick() }
+            >
+              Remover
+            </button>
           </tr>
         </tbody>
       </table>
-      <h2>
-        Total:
-        {total}
-      </h2>
     </Container>
   );
 }
+
+Cart.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  quantity: PropTypes.number,
+  price: PropTypes.number,
+}.isRequired;
 
 export default Cart;

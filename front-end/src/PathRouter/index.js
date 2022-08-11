@@ -12,7 +12,7 @@ function PathRouter() {
       <Route path="/login" component={ Login } />
       <Route path="/register" component={ Register } />
       <Route path="/customer/products" component={ Products } />
-      <Route path="/customer/checkout" component={ShoppingCart} />
+      <Route path="/customer/checkout" component={ ShoppingCart } />
       <Route exact path="/" component={ Login } />
     </Switch>
   );

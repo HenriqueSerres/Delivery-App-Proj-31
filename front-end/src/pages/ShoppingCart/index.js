@@ -1,27 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Cart from '../../components/ShoppingCart/Cart';
+import Context from '../../context/Context';
 
 import { Container } from './styles';
 
 function ShoppingCart() {
-  const [cartItems, setCartItems] = useState([]);
-
-  useEffect(() => {
-    const getCartFromLocalStorage = async () => {
-      const cartItemsData = await localStorage.getItem('cart');
-      setCartItems(JSON.parse(cartItemsData));
-    };
-    getCartFromLocalStorage();
-  }, []);
-
-  console.log(cartItems);
+  const { total, shoppingCartItems } = useContext(Context);
 
   return (
     <Container>
-      {cartItems !== null &&
-        cartItems !== undefined &&
-        cartItems.length > 0 &&
-        cartItems.filter((item) => item.quantity > 0).map((item) => <Cart item={item} />)}
+      <h3>Finalizar Pedido</h3>
+      {shoppingCartItems !== undefined
+        && shoppingCartItems !== null
+        && shoppingCartItems
+          .filter((item) => item.quantity > 0)
+          .map(({ name, quantity, price }, id) => (
+            <Cart
+              id={ id }
+              name={ name }
+              quantity={ quantity }
+              price={ price }
+              key={ name }
+            />
+          ))}
+      <h2>
+        Total:
+        {total}
+      </h2>
     </Container>
   );
 }
