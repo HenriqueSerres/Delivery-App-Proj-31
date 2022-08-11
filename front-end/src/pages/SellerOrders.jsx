@@ -15,7 +15,7 @@ function SellerOrders() {
           stateAllOrders.map(({ id, status, saleDate, totalPrice, deliveryAddress }) => (
             <OrderCard
               key={ id }
-              order={ `Pedido ${id}` }
+              orderId={ id }
               status={ status }
               orderDate={ saleDate }
               totalPrice={ totalPrice }
