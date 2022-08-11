@@ -11,8 +11,8 @@ const Sales = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
-    sallerId: {
-      field: 'saller_id',
+    sellerId: {
+      field: 'seller_id',
       allowNull: false,
       type: DataTypes.INTEGER,
     },
@@ -46,7 +46,7 @@ const Sales = (sequelize, DataTypes) => {
 	});
 
   Sales.associate = (models) => {
-    Sales.belongsTo(models.User, { as: 'saller', foreignKey: 'userId' });
+    Sales.belongsTo(models.User, { as: 'seller', foreignKey: 'sellerId' });
 		Sales.belongsTo(models.User, { as: 'user', foreignKey: 'userId' });
 	};
 
