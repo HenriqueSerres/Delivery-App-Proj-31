@@ -8,12 +8,12 @@ import ContextProvider from './context/ContextProvider';
 function App() {
   return (
     <main>
-      <Switch>
-        <ContextProvider>
-          <PathRouter />
-          <Route path="/seller/orders" component={ SellerOrders } />
-        </ContextProvider>
-      </Switch>
+      <ContextProvider>
+        <Switch>
+            <Route path="/seller/orders" component={ SellerOrders } />
+            <PathRouter />
+        </Switch>
+      </ContextProvider>
     </main>
   );
 }
