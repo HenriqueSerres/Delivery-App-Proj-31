@@ -19,7 +19,7 @@ const Sales = (sequelize, DataTypes) => {
     totalPrice: {
       field: 'total_price',
       allowNull: false,
-      type: DataTypes.FLOAT,
+      type: DataTypes.DECIMAL(9,2),
     },
     deliveryAddress: {
       field: 'delivery_address',
