@@ -2,12 +2,13 @@ import React, { useContext } from 'react';
 import OrderCard from '../components/OrderCard';
 import Context from '../context/Context';
 import '../styles/sellerOrders.css';
+import Header from '../components/Products/Header';
 
-function SellerOrders() {
+function SellerOrders({ match: { path } }) {
   const { stateAllOrders } = useContext(Context);
   return (
     <section className="seller-orders-page">
-      <span>Tela de pedidos do Vendedor</span>
+      <Header />
       <br />
       <br />
       <section className="section-order-cards">
@@ -20,6 +21,8 @@ function SellerOrders() {
               orderDate={ saleDate }
               totalPrice={ totalPrice }
               address={ deliveryAddress }
+              pathRoute={ path }
+              userRole="seller"
             />
           ))
         }
