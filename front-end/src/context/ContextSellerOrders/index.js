@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import formatDate from '../../helpers/formatDate';
 import fetchAllOrders from '../../services/fetchOrders';
 
 function ContextSellerOrders() {
@@ -12,8 +13,7 @@ function ContextSellerOrders() {
         const dataFormatted = data.map((elementObj) =>  {
           const order = elementObj;
           const saleDate = new Date(order.saleDate);
-          const date = [saleDate.getDay(), saleDate.getMonth(), saleDate.getFullYear()];
-          order.saleDate = `${date[0]}/${date[1]}/${date[2]}`;
+          order.saleDate = formatDate(saleDate);
           return order;
         })
         setStateAllOrders(dataFormatted);
