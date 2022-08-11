@@ -10,8 +10,8 @@ function App() {
     <main>
       <ContextProvider>
         <Switch>
-            <Route path="/seller/orders" component={ SellerOrders } />
-            <PathRouter />
+          <Route path="/seller/orders" component={ SellerOrders } />
+          <PathRouter />
         </Switch>
       </ContextProvider>
     </main>
