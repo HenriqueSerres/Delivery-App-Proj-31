@@ -12,6 +12,7 @@ const User = (sequelize, DataTypes) => {
     role: DataTypes.STRING,
 	}, {
 		timestamps: false,
+    tableName: 'users'
 	});
 
 	return User;
