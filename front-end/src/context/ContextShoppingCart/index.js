@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const ContextShoppingCart = () => {
   const [shoppingCart, setShoppingCart] = useState([]);
@@ -17,7 +17,7 @@ const ContextShoppingCart = () => {
     shoppingCart,
     setShoppingCart,
     shoppingCartItems,
-    setShoppingCartItems
+    setShoppingCartItems,
   };
 
   return { contextShoppingCart };

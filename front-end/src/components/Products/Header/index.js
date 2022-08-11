@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Context from '../../../context/Context';
-
 import Container from './styles';
 
 function Header() {
@@ -22,7 +20,7 @@ function Header() {
       <button
         type="button"
         data-testid="customer_products__element-navbar-link-products"
-        onClick={() => history.push('/')}
+        onClick={ () => history.push('/') }
       >
         Produtos
       </button>
@@ -30,7 +28,7 @@ function Header() {
       <button
         type="button"
         data-testid="customer_products__element-navbar-link-orders"
-        onClick={() => history.push('/')}
+        onClick={ () => history.push('/') }
       >
         Meus Pedidos
       </button>
@@ -40,7 +38,7 @@ function Header() {
       <button
         data-testid="customer_products__element-navbar-link-logout"
         type="button"
-        onClick={() => navigate('/')}
+        onClick={ () => navigate('/') }
       >
         sair
       </button>

@@ -24,3 +24,5 @@ export const Container = styled.div`
     width: 20%;
   }
 `;
+
+export const Box = styled.div``;
