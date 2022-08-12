@@ -10,8 +10,8 @@ img {
 }
 
 button {
-  border: none;
   background: green;
+  border: none;
   color: white;
   font-size: 20px;
   margin: 20px 0;
