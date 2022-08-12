@@ -9,7 +9,7 @@ function Header() {
   const history = useHistory();
 
   useEffect(() => {
-    const getFromLocal = JSON.parse(localStorage.getItem('userData'));
+    const getFromLocal = JSON.parse(localStorage.getItem('user'));
     setName(getFromLocal !== null ? getFromLocal.name : '');
   }, []);
 
@@ -20,7 +20,7 @@ function Header() {
       <button
         type="button"
         data-testid="customer_products__element-navbar-link-products"
-        onClick={ () => history.push('/') }
+        onClick={ () => history.push('/customer/products') }
       >
         Produtos
       </button>
@@ -28,7 +28,7 @@ function Header() {
       <button
         type="button"
         data-testid="customer_products__element-navbar-link-orders"
-        onClick={ () => history.push('/') }
+        onClick={ () => history.push('/customer/checkout') }
       >
         Meus Pedidos
       </button>
@@ -38,7 +38,10 @@ function Header() {
       <button
         data-testid="customer_products__element-navbar-link-logout"
         type="button"
-        onClick={ () => navigate('/') }
+        onClick={ () => {
+          localStorage.clear();
+          history.push('/');
+        } }
       >
         sair
       </button>
