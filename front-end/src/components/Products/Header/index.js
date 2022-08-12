@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Container from './styles';
-
 function Header() {
   const [name, setName] = useState('');
 
@@ -14,7 +12,7 @@ function Header() {
   }, []);
 
   return (
-    <Container>
+    <div>
       {/* Header */}
       {/* Produtos */}
       <button
@@ -45,7 +43,7 @@ function Header() {
       >
         sair
       </button>
-    </Container>
+    </div>
   );
 }
 

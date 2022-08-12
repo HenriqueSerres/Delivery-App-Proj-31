@@ -4,13 +4,11 @@ import Address from '../../components/ShoppingCart/Address';
 import Cart from '../../components/ShoppingCart/Cart';
 import Context from '../../context/Context';
 
-import { Container } from './styles';
-
 function ShoppingCart() {
   const { total, shoppingCartItems } = useContext(Context);
 
   return (
-    <Container>
+    <div>
       <Header />
       <h3>Finalizar Pedido</h3>
       {shoppingCartItems !== undefined
@@ -38,7 +36,7 @@ function ShoppingCart() {
       >
         Finalizar Pedido
       </button>
-    </Container>
+    </div>
   );
 }
 

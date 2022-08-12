@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Container } from './styles';
-
 function Cart({ id, name, quantity, price }) {
   return (
-    <Container>
+    <div>
       <table>
         <thead>
           <tr>
@@ -46,7 +44,7 @@ function Cart({ id, name, quantity, price }) {
           </tr>
         </tbody>
       </table>
-    </Container>
+    </div>
   );
 }
 

@@ -4,8 +4,6 @@ import { useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
 import Input from '../../components/GenericInput';
 
-import Container from './styles';
-
 import { axiosRequest } from '../../services/index';
 import { URL_LOGIN } from '../../helpers/constants';
 
@@ -41,7 +39,7 @@ function Login() {
   };
 
   return (
-    <Container>
+    <div>
       {/* Logo */}
       <img src="" alt="" />
       {/* Nome */}
@@ -90,7 +88,7 @@ function Login() {
           </p>
         )
       }
-    </Container>
+    </div>
   );
 }
 

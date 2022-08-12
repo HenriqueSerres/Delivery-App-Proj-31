@@ -4,8 +4,6 @@ import { useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
 import Input from '../../components/GenericInput';
 
-import Container from './styles';
-
 import { axiosRequest } from '../../services/index';
 import { URL_REGISTER } from '../../helpers/constants';
 
@@ -43,7 +41,7 @@ function Register() {
   };
 
   return (
-    <Container>
+    <div>
       {/* Nome */}
       <h2>Cadastro</h2>
       <form action="">
@@ -84,7 +82,7 @@ function Register() {
         </button>
         <p data-testid="common_register__element-invalid_register" />
       </form>
-    </Container>
+    </div>
   );
 }
 

@@ -5,7 +5,6 @@ import { getAxiosRequest } from '../../services/index';
 
 import Header from '../../components/Products/Header';
 
-// import { Container, BoxProducts } from './styles';
 import ProductsItem from '../../components/Products/ProductsItem';
 import Context from '../../context/Context';
 
