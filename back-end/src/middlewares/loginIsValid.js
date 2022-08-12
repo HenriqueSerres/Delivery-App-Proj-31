@@ -9,7 +9,7 @@ const loginIsValid = (req, _res, next) => {
   const { error } = LOGIN.validate(req.body);
   
   if (error) {
-    next({ status: 400, message: error.details[0].message });
+    next({ status: 404, message: error.details[0].message });
   }
   next();
 };
