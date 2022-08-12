@@ -1,5 +1,15 @@
 const adminService = require('../services/adminService');
 
+const registerUserAdm = async (req, res, next) => {
+  try {
+    const bodyContent = req.body;
+    const newUser = await adminService.registerUserAdm(bodyContent);
+    return res.status(201).json(newUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getAllUsers = async (_req, res, next) => {
   try {
     const users = await adminService.getAllUsers();
@@ -22,4 +32,5 @@ const removeUser = async (req, res, next) => {
 module.exports = {
   getAllUsers,
   removeUser,
+  registerUserAdm,
 };
