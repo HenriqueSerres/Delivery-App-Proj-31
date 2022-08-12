@@ -12,7 +12,7 @@ const filterAllOrders = async (id, role) => {
     where: queryParameters,
     attributes: { exclude: ['userId', 'sallerId'] },
     include: [
-      { model: User, as: 'saller', attributes: { exclude: ['password', 'email'] } },
+      { model: User, as: 'seller', attributes: { exclude: ['password', 'email'] } },
       { model: User, as: 'user', attributes: { exclude: ['password', 'email'] } },
       { model: Products, as: 'products', through: { attributes: [] } },
     ],
@@ -28,7 +28,7 @@ const filterUserOrderbyId = async (orderId, data) => {
     where: queryParameters,
     attributes: { exclude: ['userId', 'sallerId'] },
     include: [
-      { model: User, as: 'saller', attributes: { exclude: ['password', 'email'] } },
+      { model: User, as: 'seller', attributes: { exclude: ['password', 'email'] } },
       { model: User, as: 'user', attributes: { exclude: ['password', 'email'] } },
       { model: Products, as: 'products', through: { attributes: [] } },
     ],
