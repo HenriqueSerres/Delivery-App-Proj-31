@@ -65,14 +65,15 @@ const getAllSallers = async () => {
 
 const upDateOrder = async ({ id, role, status }) => {
   const statusFormated = status.toLowerCase();
+  const roleFormated = role.toLowerCase();
   const order = await Sales.findOne({ where: { id } });
   if (!order) throw handleError('404', 'Order is not found');
-  if (role === 'seller') {
+  if (roleFormated === 'seller') {
     await Sales.update({ status: statusFormated }, { where: { id } });
     const editedOrderBySeller = await Sales.findByPk(id);
     return editedOrderBySeller;
   }
-  if (role === 'customer' && statusFormated === 'entregue') {
+  if (roleFormated === 'customer' && statusFormated === 'entregue') {
     await Sales.update({ status: statusFormated }, { where: { id } });
     const editedOrderByCustomer = await Sales.findByPk(id);
     return editedOrderByCustomer;
