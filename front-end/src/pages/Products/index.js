@@ -5,9 +5,11 @@ import { getAxiosRequest } from '../../services/index';
 
 import Header from '../../components/Products/Header';
 
-import { Container, BoxProducts } from './styles';
+// import { Container, BoxProducts } from './styles';
 import ProductsItem from '../../components/Products/ProductsItem';
 import Context from '../../context/Context';
+
+import './styles.css';
 
 const eleven = 11;
 
@@ -32,18 +34,25 @@ function Products() {
   }, [setShoppingCart]);
 
   return (
-    <Container>
+    <div className="main-products">
       <Header />
-      <BoxProducts>
+      <div>
         {productsData !== undefined
           && productsData.map((product) => (
             <ProductsItem product={ product } key={ product.id } />
           ))}
-      </BoxProducts>
-      <button type="button" onClick={ () => history.push('/customer/checkout') }>
-        {`Ver Carrinho: ${total}`}
+      </div>
+      <button
+        type="button"
+        disabled={ +total === 0 }
+        data-testid="customer_products__button-cart"
+        onClick={ () => history.push('/customer/checkout') }
+      >
+        <span data-testid="customer_products__checkout-bottom-value">
+          {`Ver Carrinho: ${total.toString().replace('.', ',')}`}
+        </span>
       </button>
-    </Container>
+    </div>
   );
 }
 
