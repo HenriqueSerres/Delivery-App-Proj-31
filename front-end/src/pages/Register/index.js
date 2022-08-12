@@ -31,10 +31,12 @@ function Register() {
       password: passwordRegister,
       role: 'customer',
     });
-    if (!postRegisterInfo) return;
+    if (postRegisterInfo.message !== undefined
+      && (postRegisterInfo.message.includes('400')
+      || postRegisterInfo.message.includes('409'))
+    ) return;
     const { name, email, role, token } = postRegisterInfo.data;
-    localStorage.setItem('userData', JSON.stringify({ name, email, role, token }));
-
+    localStorage.setItem('user', JSON.stringify({ name, email, role, token }));
     if (postRegisterInfo.status === STATUS_CODE_CREATED) {
       history.push('/customer/products');
     }
@@ -76,6 +78,7 @@ function Register() {
           type="button"
           disabled={ disabledRegister }
           onClick={ () => handleClick() }
+          data-testid="common_register__button-register"
         >
           Cadastrar
         </button>
