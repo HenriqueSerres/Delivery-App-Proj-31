@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Login from '../pages/Login';
 import Register from '../pages/Register';
@@ -13,7 +13,8 @@ function PathRouter() {
       <Route path="/register" component={ Register } />
       <Route path="/customer/products" component={ Products } />
       <Route path="/customer/checkout" component={ ShoppingCart } />
-      <Route exact path="/" component={ Login } />
+      {/* <Route exact path="/" component={ Login } /> */}
+      <Route exact path="/"><Redirect to="/login" /></Route>
     </Switch>
   );
 }
