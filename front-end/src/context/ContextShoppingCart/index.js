@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 
 const ContextShoppingCart = () => {
   const [shoppingCart, setShoppingCart] = useState([]);
-  const [shoppingCartItems, setShoppingCartItems] = useState([]);
+  const [shoppingCartItems, setShoppingCartItems] = useState();
 
   useEffect(() => {
     const getCartFromLocalStorage = async () => {
       let cartItemsData = await localStorage.getItem('cart');
       cartItemsData = JSON.parse(cartItemsData);
+      console.log(cartItemsData);
       setShoppingCartItems(cartItemsData);
     };
     getCartFromLocalStorage();

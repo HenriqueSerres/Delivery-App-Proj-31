@@ -6,24 +6,49 @@ import Context from '../../context/Context';
 
 function ShoppingCart() {
   const { total, shoppingCartItems } = useContext(Context);
-
+  console.log(shoppingCartItems);
   return (
     <div>
       <Header />
       <h3>Finalizar Pedido</h3>
-      {shoppingCartItems !== undefined
-        && shoppingCartItems !== null
-        && shoppingCartItems
-          .filter((item) => item.quantity > 0)
-          .map(({ name, quantity, price }, id) => (
-            <Cart
-              id={ id }
-              name={ name }
-              quantity={ quantity }
-              price={ price }
-              key={ name }
-            />
-          ))}
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Valor Unitário</th>
+            <th>Sub-Total</th>
+            <th>Remover Item</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            shoppingCartItems
+              // ? (
+              //   <Cart
+              //     id={ 0 }
+              //     name=""
+              //     quantity={ 0 }
+              //     price={ 0 }
+              //     key=""
+              //   />
+              // )
+              && shoppingCartItems
+                .map(({ name, quantity, price }, id) => (
+                  quantity > 0
+                    && (
+                      <Cart
+                        id={ id }
+                        name={ name }
+                        quantity={ quantity }
+                        price={ price }
+                        key={ name }
+                      />)
+                ))
+          }
+        </tbody>
+      </table>
       <h2>
         Total:
         {`R$ ${total.toString().replace(',', ',')}`}
@@ -39,5 +64,4 @@ function ShoppingCart() {
     </div>
   );
 }
-
 export default ShoppingCart;
