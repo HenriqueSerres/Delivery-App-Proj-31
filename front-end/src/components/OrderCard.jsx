@@ -41,23 +41,23 @@ function OrderCard({
   };
   return (
     <button
-      className="div-card"
+      className="button-card"
       type="button"
       onClick={ () => history.push(`${pathRoute}/${orderId}`) }
     >
-      <div className="div-card-order">
+      <div className="button-card-order">
         <span
           className="span-card-order"
           data-testid={ `${userRoleFormatted}_orders__element-order-id-${orderId}` }
         >
           Pedido
-          { formatOrderNumber(orderId) }
+          { ` ${formatOrderNumber(orderId)}` }
         </span>
       </div>
-      <div className="div-card-info">
-        <div className="div-card-info-1">
+      <div className="button-card-info">
+        <div className="button-card-info-1">
           <div
-            className="div-card-info-1-order-status"
+            className="button-card-info-1-order-status"
             style={ styleOrderStatus(status) }
           >
             <span
@@ -68,7 +68,7 @@ function OrderCard({
               { status.toUpperCase() }
             </span>
           </div>
-          <div className="div-card-info-1-date-price">
+          <div className="button-card-info-1-date-price">
             <div
               data-testid={ `${userRoleFormatted}_orders__element-order-date-${orderId}` }
             >
@@ -84,7 +84,7 @@ function OrderCard({
           </div>
         </div>
         <div
-          className="div-card-info-2-address"
+          className="button-card-info-2-address"
           data-testid={ `${userRoleFormatted}_orders__element-card-address-${orderId}` }
         >
           { address }
