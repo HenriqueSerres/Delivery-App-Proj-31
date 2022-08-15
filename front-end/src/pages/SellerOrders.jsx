@@ -50,11 +50,12 @@ SellerOrders.propTypes = {
     params: PropTypes.objectOf(PropTypes.string),
     path: PropTypes.string,
   }),
-  path: PropTypes.string.isRequired,
+  path: PropTypes.string,
 };
 
 SellerOrders.defaultProps = {
   match: {},
+  path: '',
 };
 
 export default SellerOrders;
