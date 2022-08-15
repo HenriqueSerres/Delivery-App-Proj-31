@@ -12,7 +12,7 @@ function ContextSellerOrders() {
   useEffect(() => {
     const userToken = JSON.parse(localStorage.getItem('user'));
     if (userToken) {
-      fetchAllOrders('http://localhost:3001/orders', '')
+      fetchAllOrders('http://localhost:3001/orders', userToken.token)
         .then((data) => {
           if (Array.isArray(data) && !Object.keys(data).includes('message')) {
             const dataFormatted = data.map((elementObj) => {
