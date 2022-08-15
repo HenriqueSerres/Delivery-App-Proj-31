@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import Context from '../../../context/Context';
 
 function Cart({ id, name, quantity, price }) {
+  const { setTotal, shoppingCartItems, setShoppingCartItems } = useContext(Context);
+
+  const handleClick = () => {
+    const a = shoppingCartItems.map((item) => {
+      if (item.name === name) {
+        item.quantity = 0;
+      }
+      return item;
+    });
+    const b = shoppingCartItems.reduce((acc, curr) => {
+      acc += Number(curr.price) * Number(curr.quantity);
+      return acc;
+    }, 0);
+    setShoppingCartItems(a);
+    localStorage.setItem('carrinho', JSON.stringify(a));
+    setTotal(b);
+  };
+
   return (
 
     <>
@@ -11,7 +30,7 @@ function Cart({ id, name, quantity, price }) {
             `customer_checkout__element-order-table-item-number--${id}`
           }
         >
-          {id}
+          {id + 1}
         </td>
         <td data-testid={ `customer_checkout__element-order-table-name--${id}` }>
           {name}
@@ -24,16 +43,16 @@ function Cart({ id, name, quantity, price }) {
             `customer_checkout__element-order-table-unit-price--${id}`
           }
         >
-          {price}
+          {Number(price).toFixed(2).toString().replace('.', ',')}
         </td>
         <td data-testid={ `customer_checkout__element-order-table-sub-total--${id}` }>
-          {quantity * price}
+          {(quantity * price).toFixed(2).toString().replace('.', ',')}
         </td>
       </tr>
 
       <button
         type="button"
-        onClick={ () => handleClick }
+        onClick={ () => handleClick() }
         data-testid={ `customer_checkout__element-order-table-remove--${id}` }
       >
         Remover

@@ -1,12 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Header from '../../components/Products/Header';
 import Address from '../../components/ShoppingCart/Address';
 import Cart from '../../components/ShoppingCart/Cart';
 import Context from '../../context/Context';
 
 function ShoppingCart() {
+  const [teste, setTeste] = useState([]);
   const { total, shoppingCartItems } = useContext(Context);
-  console.log(shoppingCartItems);
+
+  useEffect(() => {
+    const funcao = () => (
+      !shoppingCartItems
+        ? JSON.parse(localStorage.getItem('carrinho'))
+        : shoppingCartItems
+    );
+    setTeste(funcao());
+  }, []);
+
   return (
     <div>
       <Header />
@@ -24,34 +34,23 @@ function ShoppingCart() {
         </thead>
         <tbody>
           {
-            shoppingCartItems
-              // ? (
-              //   <Cart
-              //     id={ 0 }
-              //     name=""
-              //     quantity={ 0 }
-              //     price={ 0 }
-              //     key=""
-              //   />
-              // )
-              && shoppingCartItems
-                .map(({ name, quantity, price }, id) => (
-                  quantity > 0
-                    && (
-                      <Cart
-                        id={ id }
-                        name={ name }
-                        quantity={ quantity }
-                        price={ price }
-                        key={ name }
-                      />)
-                ))
+            teste
+              .filter((item) => +item.quantity > 0)
+              .map(({ name, quantity, price }, id) => (
+
+                <Cart
+                  id={ id }
+                  name={ name }
+                  quantity={ quantity }
+                  price={ price }
+                  key={ name }
+                />))
           }
         </tbody>
       </table>
-      <h2>
+      <h2 data-testid="customer_checkout__element-order-total-price">
         Total:
-        {`R$ ${total.toString().replace(',', ',')}`}
+        {`R$ ${total.toString().replace('.', ',')}`}
       </h2>
       <h3>Detalhes e endereço para entrega</h3>
       <Address />
