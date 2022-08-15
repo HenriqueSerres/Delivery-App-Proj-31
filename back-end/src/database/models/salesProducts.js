@@ -1,5 +1,5 @@
 const SalesProducts = (sequelize, DataTypes) => {
-	const SalesProducts = sequelize.define('Sales_Products', {
+	const SalesProducts = sequelize.define('SalesProducts', {
     saleId: {
       field: 'sale_id',
       allowNull: false,
@@ -18,6 +18,7 @@ const SalesProducts = (sequelize, DataTypes) => {
     },
 	}, {
 		timestamps: false,
+    tableName: 'sales_products'
 	});
 
   SalesProducts.associate = (models) => {

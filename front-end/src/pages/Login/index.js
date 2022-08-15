@@ -1,10 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Context from '../../context/Context';
 import Input from '../../components/GenericInput';
-
-import Container from './styles';
 
 import { axiosRequest } from '../../services/index';
 import { URL_LOGIN } from '../../helpers/constants';
@@ -12,6 +10,8 @@ import { URL_LOGIN } from '../../helpers/constants';
 const STATUS_CODE_OK = 200;
 
 function Login() {
+  const [verify, setVerify] = useState(false);
+
   const {
     emailLogin,
     setEmailLogin,
@@ -27,17 +27,19 @@ function Login() {
       email: emailLogin,
       password: passwordLogin,
     });
-    if (!postLoginInfo) return;
-    console.log(postLoginInfo);
+    if (
+      postLoginInfo.message !== undefined
+      && postLoginInfo.message.includes('404')
+    ) return setVerify(true);
     const { name, email, role, token } = postLoginInfo.data;
-    localStorage.setItem('userData', JSON.stringify({ name, email, role, token }));
+    localStorage.setItem('user', JSON.stringify({ name, email, role, token }));
     if (postLoginInfo.status === STATUS_CODE_OK) {
       history.push('/customer/products');
     }
   };
 
   return (
-    <Container>
+    <div>
       {/* Logo */}
       <img src="" alt="" />
       {/* Nome */}
@@ -62,15 +64,31 @@ function Login() {
           onChange={ ({ target }) => setPasswordLogin(target.value) }
         />
         {/* Botão Login */}
-        <button type="button" disabled={ disabledLogin } onClick={ () => handleClick() }>
+        <button
+          type="button"
+          data-testid="common_login__button-login"
+          disabled={ disabledLogin }
+          onClick={ () => handleClick() }
+        >
           Login
         </button>
         {/* Botão Cadastro */}
-        <button type="button" onClick={ () => history.push('/register') }>
+        <button
+          type="button"
+          data-testid="common_login__button-register"
+          onClick={ () => history.push('/register') }
+        >
           Ainda não possui conta
         </button>
       </form>
-    </Container>
+      {
+        verify && (
+          <p data-testid="common_login__element-invalid-email">
+            Email não cadastrado
+          </p>
+        )
+      }
+    </div>
   );
 }
 

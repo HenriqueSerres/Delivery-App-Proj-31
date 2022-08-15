@@ -11,15 +11,15 @@ const Sales = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
-    sallerId: {
-      field: 'saller_id',
+    sellerId: {
+      field: 'seller_id',
       allowNull: false,
       type: DataTypes.INTEGER,
     },
     totalPrice: {
       field: 'total_price',
       allowNull: false,
-      type: DataTypes.FLOAT,
+      type: DataTypes.DECIMAL(9,2),
     },
     deliveryAddress: {
       field: 'delivery_address',
@@ -43,10 +43,11 @@ const Sales = (sequelize, DataTypes) => {
     }
 	}, {
 		timestamps: false,
+    tableName: 'sales'
 	});
 
   Sales.associate = (models) => {
-    Sales.belongsTo(models.User, { as: 'saller', foreignKey: 'userId' });
+    Sales.belongsTo(models.User, { as: 'seller', foreignKey: 'sellerId' });
 		Sales.belongsTo(models.User, { as: 'user', foreignKey: 'userId' });
 	};
 

@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
+import Header from '../../components/Products/Header';
+import Address from '../../components/ShoppingCart/Address';
 import Cart from '../../components/ShoppingCart/Cart';
 import Context from '../../context/Context';
-
-import { Container } from './styles';
 
 function ShoppingCart() {
   const { total, shoppingCartItems } = useContext(Context);
 
   return (
-    <Container>
+    <div>
+      <Header />
       <h3>Finalizar Pedido</h3>
       {shoppingCartItems !== undefined
         && shoppingCartItems !== null
@@ -25,9 +26,17 @@ function ShoppingCart() {
           ))}
       <h2>
         Total:
-        {total}
+        {`R$ ${total.toString().replace(',', ',')}`}
       </h2>
-    </Container>
+      <h3>Detalhes e endereço para entrega</h3>
+      <Address />
+      <button
+        type="button"
+        data-testid="customer_checkout__button-submit-order"
+      >
+        Finalizar Pedido
+      </button>
+    </div>
   );
 }
 

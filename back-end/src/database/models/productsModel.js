@@ -12,7 +12,7 @@ const Products = (sequelize, DataTypes) => {
     },
     price: {
       allowNull: false,
-      type: DataTypes.FLOAT,
+      type: DataTypes.DECIMAL(4,2),
     },
     urlImage: {
       field: 'url_image',
@@ -21,6 +21,7 @@ const Products = (sequelize, DataTypes) => {
     },
 	}, {
 		timestamps: false,
+    tableName: 'products'
 	});
 
 	return Products;

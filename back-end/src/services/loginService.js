@@ -12,7 +12,7 @@ const loginUser = async (email, password) => {
   });
 
   if (!user) {
-    throw handleError('400', 'User not exists');
+    throw handleError('404', 'User not exists');
   }
   const userData = user.dataValues;
   const token = generateJWT('10d', userData, JWT_SUPER_SECRET);

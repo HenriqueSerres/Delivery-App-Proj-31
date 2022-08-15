@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
+const { JWT_SUPER_SECRET } = require('../constants');
 require('dotenv').config();
-
-const senhasecreta = process.env.JWT_SECRET;
 
 const tokenIsValid = async (req, res, next) => {
   try {
@@ -11,7 +10,7 @@ const tokenIsValid = async (req, res, next) => {
       return res.status(401).json({ message: 'Token not found' });
     }    
 
-    const decoded = jwt.verify(token, senhasecreta);
+    const decoded = jwt.verify(token, JWT_SUPER_SECRET);
 
     req.user = decoded;
 
