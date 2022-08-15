@@ -87,9 +87,9 @@ routes.get('/orders', validateJwtToken, async (req, res) => {
   const queryParameters = identifyUser(id, role);
   const result = await Sales.findAll({
     where: queryParameters,
-    attributes: { exclude: ['userId', 'sallerId'] },
+    attributes: { exclude: ['userId', 'sellerId'] },
     include: [
-      { model: User, as: 'saller', attributes: { exclude: ['password', 'email'] } },
+      { model: User, as: 'seller', attributes: { exclude: ['password', 'email'] } },
       { model: User, as: 'user', attributes: { exclude: ['password', 'email'] } },
       { model: Products, as: 'products', through: { attributes: [] } },
     ],
@@ -104,9 +104,9 @@ routes.get('/orders/:id', validateJwtToken, async (req, res) => {
   queryParameters.id = id;
   const result = await Sales.findAll({
     where: queryParameters,
-    attributes: { exclude: ['userId', 'sallerId'] },
+    attributes: { exclude: ['userId', 'sellerId'] },
     include: [
-      { model: User, as: 'saller', attributes: { exclude: ['password', 'email'] } },
+      { model: User, as: 'seller', attributes: { exclude: ['password', 'email'] } },
       { model: User, as: 'user', attributes: { exclude: ['password', 'email'] } },
       { model: Products, as: 'products', through: { attributes: [] } },
     ],
