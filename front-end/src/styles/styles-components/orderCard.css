@@ -1,9 +1,9 @@
 .button-card {
   align-items: stretch;
-  border: 1px solid rgb(79, 79, 79);
   background-color: white;
+  border: 1px solid rgb(79, 79, 79);
   border-radius: 10px;
-  box-shadow: 0px 5px 10px black;
+  box-shadow: 0.001px 5px 10px black;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -15,7 +15,7 @@
 }
 
 .button-card:hover {
-  box-shadow: 0px 1px 5px;
+  box-shadow: 0.001px 1px 5px;
 }
 
 .button-card-order {
@@ -31,6 +31,7 @@
 
 .span-card-order {
   color: black;
+
   /* display: inline-block; */
   font-size: 18pt;
 }
@@ -39,6 +40,7 @@
   background-color: rgb(208, 208, 208);
   border-radius: 0.001px 10px 10px 0.001px;
   display: inline-block;
+
   /* padding: 60px 0.001px; */
   width: 100%;
 }
@@ -61,6 +63,7 @@
 }
 
 .button-card-info-1-date-price {
+
   /* background-color: aquamarine; */
   color: black;
   display: inline-block;
@@ -75,17 +78,15 @@
   background-color: rgb(230, 230, 230);
   border-radius: 5px;
   margin-right: 10px;
-  padding: 5px 18px;
-}
-
-.button-card-info-1-date-price div {
   margin-top: 10px;
+  padding: 5px 18px;
 }
 
 .button-card-info-2-address {
   color: black;
   font-size: 12pt;
   margin: 15px 10px 15px 50px;
+
   /* margin-left: 50px; */  
   text-align: end;
 }
