@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { formatOrderNumber } from '../helpers/formatNumber';
+import '../styles/styles-components/orderCard.css';
 
 function OrderCard({
   orderId,
