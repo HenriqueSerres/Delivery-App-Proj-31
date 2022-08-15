@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import OrderCard from '../components/OrderCard';
 import Context from '../context/Context';
-import '../styles/sellerOrders.css';
+import '../styles/styles-pages/sellerOrders.css';
 import Header from '../components/Products/Header';
 
 function SellerOrders({ match: { path } }) {
