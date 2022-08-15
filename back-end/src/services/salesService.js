@@ -10,7 +10,7 @@ const filterAllOrders = async (id, role) => {
   const queryParameters = identifyUser(id, role);
   const result = await Sales.findAll({
     where: queryParameters,
-    attributes: { exclude: ['userId', 'sallerId'] },
+    attributes: { exclude: ['userId', 'sellerId'] },
     include: [
       { model: User, as: 'seller', attributes: { exclude: ['password', 'email'] } },
       { model: User, as: 'user', attributes: { exclude: ['password', 'email'] } },
@@ -26,7 +26,7 @@ const filterUserOrderbyId = async (orderId, data) => {
   queryParameters.id = orderId;
   const certainOrder = await Sales.findOne({
     where: queryParameters,
-    attributes: { exclude: ['userId', 'sallerId'] },
+    attributes: { exclude: ['userId', 'sellerId'] },
     include: [
       { model: User, as: 'seller', attributes: { exclude: ['password', 'email'] } },
       { model: User, as: 'user', attributes: { exclude: ['password', 'email'] } },
@@ -37,9 +37,9 @@ const filterUserOrderbyId = async (orderId, data) => {
 };
 
 const addNewOrder = async (id, role, body) => {
-  const { sallerId, products, ...payload } = body;
+  const { sellerId, products, ...payload } = body;
   if (role !== 'customer') throw handleError(401, 'Unauthorized');
-  const order = { userId: id, sallerId, products, ...payload };
+  const order = { userId: id, sellerId, products, ...payload };
   const t = await sequelize.transaction();
   try {
     const newOrder = await Sales.create(order, { transaction: t });
@@ -55,17 +55,17 @@ const addNewOrder = async (id, role, body) => {
   }  
 };
 
-const getAllSallers = async () => {
-  const sallers = await User.findAll({
+const getAllSellers = async () => {
+  const sellers = await User.findAll({
     where: { role: 'seller' },
     attributes: ['id', 'name'],
   });
-  return sallers;
+  return sellers;
 };
 
 module.exports = {
   filterAllOrders,
   addNewOrder,
-  getAllSallers,
+  getAllSellers,
   filterUserOrderbyId,
 };
