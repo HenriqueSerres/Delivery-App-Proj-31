@@ -20,10 +20,10 @@ const addNewOrder = async (req, res, next) => {
   }
 };
 
-const getAllSallers = async (req, res, next) => {
+const getAllSellers = async (req, res, next) => {
   try {
-    const sallers = await salesService.getAllSallers();
-    return res.status(200).json(sallers);
+    const sellers = await salesService.getAllSellers();
+    return res.status(200).json(sellers);
   } catch (error) {
     next(error);
   }
@@ -43,6 +43,6 @@ const findAnUserOrder = async (req, res, next) => {
 module.exports = {
   findOrders,
   addNewOrder,
-  getAllSallers,
+  getAllSellers,
   findAnUserOrder,
 };
