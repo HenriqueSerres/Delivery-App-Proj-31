@@ -14,10 +14,12 @@ const fetchAllOrders = async (url, token) => {
   try {
     const response = await fetch(url, init);
     const data = await response.json();
-    return data;
+    if (response.status === 200) return data;
+    return { httpStatusCode: response.status, message: data };
   } catch (error) {
     console.log('ERROR: Erro na função "fetchOrders"');
     console.log(error.message);
+    return [];
   }
 };
 
