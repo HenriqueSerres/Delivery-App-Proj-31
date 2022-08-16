@@ -5,22 +5,26 @@ import ContextLogin from './ContextLogin';
 import ContextRegister from './ContextRegister';
 import ContextShoppingCart from './ContextShoppingCart';
 import ContextProducts from './ContextProducts';
+import ContextSellerOrders from './ContextSellerOrders';
 
 function ContextProvider({ children }) {
   const { contextLoginObj } = ContextLogin();
   const { contextRegisterObj } = ContextRegister();
   const { contextShoppingCart } = ContextShoppingCart();
   const { contextProductsObj } = ContextProducts();
+  const { contextSellerOrdersObj } = ContextSellerOrders();
 
   const context = useMemo(() => ({
     ...contextLoginObj,
     ...contextRegisterObj,
     ...contextProductsObj,
     ...contextShoppingCart,
+    ...contextSellerOrdersObj,
   }), [contextLoginObj,
     contextRegisterObj,
     contextProductsObj,
-    contextShoppingCart]);
+    contextShoppingCart,
+    contextSellerOrdersObj]);
 
   return <Context.Provider value={ context }>{children}</Context.Provider>;
 }
