@@ -7,7 +7,6 @@ const ContextShoppingCart = () => {
   useEffect(() => {
     let cartItemsData = localStorage.getItem('carrinho');
     cartItemsData = JSON.parse(cartItemsData);
-    console.log(cartItemsData);
     setShoppingCartItems(cartItemsData);
   }, []);
 

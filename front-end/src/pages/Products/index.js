@@ -22,10 +22,11 @@ function Products() {
     const getInfoProducts = async () => {
       const getData = await getAxiosRequest();
       setProductsData(getData);
-      const shoppingCartData = getData.slice(0, eleven).map(({ name, price }) => ({
+      const shoppingCartData = getData.slice(0, eleven).map(({ name, price, id }) => ({
         name,
         price,
         quantity: 0,
+        id,
       }));
       setShoppingCart(shoppingCartData);
     };

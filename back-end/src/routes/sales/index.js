@@ -5,7 +5,7 @@ const tokenIsValid = require('../../middlewares/tokenIsValid');
 const salesRoutes = express.Router();
 
 salesRoutes.get('/', tokenIsValid, salesController.findOrders);
-salesRoutes.get('/sallers/names', tokenIsValid, salesController.getAllSallers);
+salesRoutes.get('/sellers/names', tokenIsValid, salesController.getAllSallers);
 salesRoutes.post('/', tokenIsValid, salesController.addNewOrder);
 salesRoutes.get('/:id', tokenIsValid, salesController.findAnUserOrder);
 

@@ -1,11 +1,18 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Header from '../../components/Products/Header';
 import Address from '../../components/ShoppingCart/Address';
 import Cart from '../../components/ShoppingCart/Cart';
 import Context from '../../context/Context';
+import { URL_ORDERS } from '../../helpers/constants';
+import { axiosRequestToken, getAxiosRequestSellers } from '../../services';
 
 function ShoppingCart() {
   const { total, shoppingCartItems, setShoppingCartItems } = useContext(Context);
+  const [sellers, setSellers] = useState([]);
+  const [address, setAddress] = useState({
+    clientAddress: '',
+    clientNumber: '',
+  });
 
   useEffect(() => {
     const funcao = () => (
@@ -13,6 +20,26 @@ function ShoppingCart() {
     );
     setShoppingCartItems(funcao());
   }, []);
+
+  useEffect(() => {
+    const getSellers = async () => {
+      const sellersAxios = await getAxiosRequestSellers();
+      setSellers(sellersAxios);
+    };
+    getSellers();
+  }, []);
+
+  const handleClick = async () => {
+    const data = {
+      sellerId: 1,
+      totalPrice: Number(total),
+      deliveryAddress: address.clientAddress,
+      deliveryNumber: address.clientNumber,
+      status: 'pendente',
+      products: shoppingCartItems,
+    };
+    await axiosRequestToken(URL_ORDERS, data);
+  };
 
   return (
     <div>
@@ -51,10 +78,11 @@ function ShoppingCart() {
         {`R$ ${total.toString().replace('.', ',')}`}
       </h2>
       <h3>Detalhes e endereço para entrega</h3>
-      <Address />
+      <Address sellers={ sellers } setAddress={ setAddress } />
       <button
         type="button"
         data-testid="customer_checkout__button-submit-order"
+        onClick={ () => handleClick() }
       >
         Finalizar Pedido
       </button>
