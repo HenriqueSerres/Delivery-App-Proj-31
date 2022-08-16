@@ -3,22 +3,20 @@ import PropTypes from 'prop-types';
 import Context from '../../../context/Context';
 
 function Cart({ id, name, quantity, price }) {
-  const { setTotal, shoppingCartItems, setShoppingCartItems } = useContext(Context);
+  const { shoppingCartItems, setTotal,
+    calculateTotalPrice, setShoppingCartItems } = useContext(Context);
 
   const handleClick = () => {
-    const a = shoppingCartItems.map((item) => {
+    const filterByName = shoppingCartItems.map((item) => {
       if (item.name === name) {
         item.quantity = 0;
       }
       return item;
     });
-    const b = shoppingCartItems.reduce((acc, curr) => {
-      acc += Number(curr.price) * Number(curr.quantity);
-      return acc;
-    }, 0);
-    setShoppingCartItems(a);
-    localStorage.setItem('carrinho', JSON.stringify(a));
-    setTotal(b);
+    setShoppingCartItems(filterByName);
+    const calculateTotal = calculateTotalPrice(shoppingCartItems);
+    setTotal(calculateTotal);
+    localStorage.setItem('carrinho', JSON.stringify(filterByName));
   };
 
   return (

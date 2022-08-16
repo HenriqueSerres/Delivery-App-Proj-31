@@ -53,8 +53,8 @@ function ContextProducts() {
     setTotal,
     decreaseQuantity,
     increaseQuantity,
+    calculateTotalPrice,
     totalPrice };
-
   return { contextProductsObj };
 }
 

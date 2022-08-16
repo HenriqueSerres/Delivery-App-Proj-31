@@ -1,20 +1,17 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Header from '../../components/Products/Header';
 import Address from '../../components/ShoppingCart/Address';
 import Cart from '../../components/ShoppingCart/Cart';
 import Context from '../../context/Context';
 
 function ShoppingCart() {
-  const [teste, setTeste] = useState([]);
-  const { total, shoppingCartItems } = useContext(Context);
+  const { total, shoppingCartItems, setShoppingCartItems } = useContext(Context);
 
   useEffect(() => {
     const funcao = () => (
-      !shoppingCartItems
-        ? JSON.parse(localStorage.getItem('carrinho'))
-        : shoppingCartItems
+      JSON.parse(localStorage.getItem('carrinho'))
     );
-    setTeste(funcao());
+    setShoppingCartItems(funcao());
   }, []);
 
   return (
@@ -34,7 +31,8 @@ function ShoppingCart() {
         </thead>
         <tbody>
           {
-            teste
+            shoppingCartItems
+            && shoppingCartItems
               .filter((item) => +item.quantity > 0)
               .map(({ name, quantity, price }, id) => (
 
