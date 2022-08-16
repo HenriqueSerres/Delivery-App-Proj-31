@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { formatOrderNumber } from '../helpers/formatNumber';
+import formatDate from '../helpers/formatDate';
 import '../styles/styles-components/orderCard.css';
 
 function OrderCard({
@@ -9,7 +10,6 @@ function OrderCard({
   status,
   orderDate,
   totalPrice,
-  address,
   pathRoute,
   userRole,
 }) {
@@ -73,7 +73,7 @@ function OrderCard({
             <div
               data-testid={ `${userRoleFormatted}_orders__element-order-date-${orderId}` }
             >
-              { orderDate }
+              { formatDate(new Date(orderDate)) }
             </div>
             <div
               data-testid={ `${userRoleFormatted}_orders__element-card-price-${orderId}` }
@@ -83,12 +83,6 @@ function OrderCard({
               }
             </div>
           </div>
-        </div>
-        <div
-          className="button-card-info-2-address"
-          data-testid={ `${userRoleFormatted}_orders__element-card-address-${orderId}` }
-        >
-          { address }
         </div>
       </div>
     </button>
@@ -100,13 +94,8 @@ OrderCard.propTypes = {
   status: PropTypes.string.isRequired,
   orderDate: PropTypes.string.isRequired,
   totalPrice: PropTypes.number.isRequired,
-  address: PropTypes.string,
   pathRoute: PropTypes.string.isRequired,
   userRole: PropTypes.string.isRequired,
-};
-
-OrderCard.defaultProps = {
-  address: '',
 };
 
 export default OrderCard;
