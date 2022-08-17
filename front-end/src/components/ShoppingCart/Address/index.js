@@ -1,16 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Address({ sellers, setAddress }) {
+function Address({ sellers, setAddress, setTeste }) {
+  console.log(sellers);
   return (
     <>
       <label htmlFor="customer_checkout__select-seller">
         P. Vendedor Responsável
-        <select name="" data-testid="customer_checkout__select-seller">
+        <select
+          name=""
+          data-testid="customer_checkout__select-seller"
+          onClick={ ({ target }) => {
+            const sellerId = target.options[target.selectedIndex].id;
+            setTeste(+sellerId);
+          } }
+        >
           {
             sellers
              && sellers.map((seller) => (
-               <option key={ seller.name }>
+               <option value={ seller.id } key={ seller.name } id={ seller.id }>
                  {seller.name}
                </option>
              ))
