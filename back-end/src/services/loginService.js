@@ -1,5 +1,4 @@
 const cryptoJs = require('crypto-js');
-const { JWT_SUPER_SECRET } = require('../constants');
 const { User } = require('../database/models');
 const generateJWT = require('../utils/generateToken');
 const handleError = require('../utils/handleError');
@@ -15,7 +14,7 @@ const loginUser = async (email, password) => {
     throw handleError('404', 'User not exists');
   }
   const userData = user.dataValues;
-  const token = generateJWT('10d', userData, JWT_SUPER_SECRET);
+  const token = generateJWT('10d', userData);
   return {
     ...userData,
     token,
