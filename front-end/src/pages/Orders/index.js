@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import fetchAllOrders from '../../services/fetchOrders';
 import { URL_ORDERS } from '../../helpers/constants';
 import Header from '../../components/Products/Header';
@@ -7,14 +8,22 @@ import OrderCard from '../../components/OrderCard';
 function Orders() {
   const [customerOrders, setCustomerOrders] = useState([]);
 
+  const history = useHistory();
+
   useEffect(() => {
-    const getOrders = async () => {
-      const userData = JSON.parse(localStorage.getItem('user'));
-      const { token } = userData;
-      const orders = await fetchAllOrders(URL_ORDERS, token);
-      setCustomerOrders(orders);
-    };
-    getOrders();
+    const userData = JSON.parse(localStorage.getItem('user'));
+    if (userData.role !== 'customer') {
+      alert('Você não é um cliente >:(');
+      history.push('/login');
+    } else {
+      const getOrders = async () => {
+        const { token } = userData;
+        const orders = await fetchAllOrders(URL_ORDERS, token);
+        setCustomerOrders(orders);
+      };
+      console.log(userData);
+      getOrders();
+    }
   }, []);
 
   return (
