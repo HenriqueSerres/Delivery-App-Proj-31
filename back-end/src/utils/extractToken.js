@@ -8,6 +8,6 @@ const extractToken = (filepath) => {
     console.error(`ERROR: Erro ao tentar Extrair secret JWT do arquivo ${filepath}`);
     return process.env.JWT_SECRET;
   }
-}
+};
 
 module.exports = extractToken;
