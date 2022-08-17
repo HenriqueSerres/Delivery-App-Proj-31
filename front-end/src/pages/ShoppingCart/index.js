@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Header from '../../components/Products/Header';
 import Address from '../../components/ShoppingCart/Address';
 import Cart from '../../components/ShoppingCart/Cart';
@@ -29,6 +30,8 @@ function ShoppingCart() {
     getSellers();
   }, []);
 
+  const history = useHistory();
+
   const handleClick = async () => {
     const data = {
       sellerId: 1,
@@ -38,7 +41,12 @@ function ShoppingCart() {
       status: 'pendente',
       products: shoppingCartItems,
     };
-    await axiosRequestToken(URL_ORDERS, data);
+    const a = await axiosRequestToken(URL_ORDERS, data);
+    console.log(a);
+    if (a?.statusText?.includes('Created')) {
+      const orderId = a.data.id;
+      history.push(`/customers/orders/${orderId}`);
+    }
   };
 
   return (
