@@ -6,7 +6,7 @@ const identifyUser = (genericUserId, role) => {
       break;
     
     case 'seller':
-      queryParameters.sallerId = genericUserId;
+      queryParameters.sellerId = genericUserId;
       break;
   
     default:

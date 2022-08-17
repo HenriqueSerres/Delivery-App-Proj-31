@@ -1,0 +1,90 @@
+.button-card {
+  align-items: stretch;
+  background-color: white;
+  border: 1px solid rgb(79, 79, 79);
+  border-radius: 10px;
+  box-shadow: 0.001px 5px 10px black;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  outline: none;
+  padding: 0.001px;
+  text-decoration: none;
+  width: 45%;
+}
+
+.button-card:hover {
+  box-shadow: 0.001px 1px 5px;
+}
+
+.button-card-order {
+  align-items: center;
+  background-color: white;
+  border-radius: 10px 0.001px 0.001px 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  padding: 10px;
+  text-align: center;
+}
+
+.span-card-order {
+  color: black;
+
+  /* display: inline-block; */
+  font-size: 18pt;
+}
+
+.button-card-info {
+  background-color: rgb(208, 208, 208);
+  border-radius: 0.001px 10px 10px 0.001px;
+  display: inline-block;
+
+  /* padding: 60px 0.001px; */
+  width: 100%;
+}
+
+.button-card-info-1 {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-card-info-1-order-status {
+  background-color: rgb(150, 150, 150);
+  border-radius: 10px;
+  color: black;
+  display: inline-block;
+  font-size: 15pt;
+  font-weight: 800;
+  margin: 15px 5px 0.001px 12px;
+  padding: 35px;
+}
+
+.button-card-info-1-date-price {
+
+  /* background-color: aquamarine; */
+  color: black;
+  display: inline-block;
+  font-size: 16pt;
+  font-weight: 800;
+  margin-left: 5px;
+  text-align: center;
+  width: 100%;
+}
+
+.button-card-info-1-date-price div {
+  background-color: rgb(230, 230, 230);
+  border-radius: 5px;
+  margin-right: 10px;
+  margin-top: 10px;
+  padding: 5px 18px;
+}
+
+.button-card-info-2-address {
+  color: black;
+  font-size: 12pt;
+  margin: 15px 10px 15px 50px;
+  text-align: end;
+}

@@ -1,10 +1,9 @@
 const { Router } = require('express');
 const jwt = require('jsonwebtoken');
+const { JWT_SUPER_SECRET } = require('../constants');
 const { User, Sales, Products } = require('../database/models');
 
 const routes = Router();
-
-const SUPER_SECRET_JWT = 'super-secret-94527';
 
 const generateJwtToken = (validity, paylod, superSecret) => {
   const jwtConfig = {
@@ -21,7 +20,7 @@ const validateJwtToken = (req, res, next) => {
     // return next({ code: 401, message: 'Token not found' });
   }
   try {
-    const decoded = jwt.verify(token, SUPER_SECRET_JWT);
+    const decoded = jwt.verify(token, JWT_SUPER_SECRET);
     req.userData = { ...decoded };
     next();
   } catch (error) {
@@ -39,7 +38,7 @@ routes.post('/login', async (req, res) => {
     },
     attributes: { exclude: ['password'] },
   });
-  const token = generateJwtToken('7d', result, SUPER_SECRET_JWT);
+  const token = generateJwtToken('7d', result, JWT_SUPER_SECRET);
   res.status(200).json({ ...result.dataValues, token });
 });
 
@@ -87,9 +86,9 @@ routes.get('/orders', validateJwtToken, async (req, res) => {
   const queryParameters = identifyUser(id, role);
   const result = await Sales.findAll({
     where: queryParameters,
-    attributes: { exclude: ['userId', 'sallerId'] },
+    attributes: { exclude: ['userId', 'sellerId'] },
     include: [
-      { model: User, as: 'saller', attributes: { exclude: ['password', 'email'] } },
+      { model: User, as: 'seller', attributes: { exclude: ['password', 'email'] } },
       { model: User, as: 'user', attributes: { exclude: ['password', 'email'] } },
       { model: Products, as: 'products', through: { attributes: [] } },
     ],
@@ -104,9 +103,9 @@ routes.get('/orders/:id', validateJwtToken, async (req, res) => {
   queryParameters.id = id;
   const result = await Sales.findAll({
     where: queryParameters,
-    attributes: { exclude: ['userId', 'sallerId'] },
+    attributes: { exclude: ['userId', 'sellerId'] },
     include: [
-      { model: User, as: 'saller', attributes: { exclude: ['password', 'email'] } },
+      { model: User, as: 'seller', attributes: { exclude: ['password', 'email'] } },
       { model: User, as: 'user', attributes: { exclude: ['password', 'email'] } },
       { model: Products, as: 'products', through: { attributes: [] } },
     ],

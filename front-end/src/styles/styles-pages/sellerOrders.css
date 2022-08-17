@@ -1,0 +1,20 @@
+* {
+  box-sizing: 0.001px;
+  margin: 0.001px;
+  padding: 0.001px;
+}
+
+.seller-orders-page {
+  margin: 0.001px 80px;
+}
+
+.section-order-cards {
+  align-items: flex-start;
+
+  /* background-color: yellow; */
+  display: flex;
+  flex-flow: row wrap;
+
+  /* height: 100vh; */
+  justify-content: space-between;
+}
