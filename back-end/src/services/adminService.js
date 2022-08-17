@@ -2,10 +2,9 @@ const cryptoJs = require('crypto-js');
 const { User } = require('../database/models');
 const handleError = require('../utils/handleError');
 const generateJWT = require('../utils/generateToken');
-const { JWT_SUPER_SECRET } = require('../constants');
 
 const registerUserAdm = async (body) => {
-  const token = generateJWT('1d', body, JWT_SUPER_SECRET);
+  const token = generateJWT('1d', body);
   const { name, email, password, role } = body;
   const encryptedPass = cryptoJs.MD5(password).toString();
   const newUser = await User.create({ name, email, password: encryptedPass, role });
