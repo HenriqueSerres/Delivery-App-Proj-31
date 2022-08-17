@@ -82,13 +82,13 @@ function OrderCard({
                 totalPrice.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
               }
             </div>
-            <div
-              className="button-card-info-2-address"
-              data-testid={ `${userRoleFormatted}_orders__
+          </div>
+          <div
+            className="button-card-info-2-address"
+            data-testid={ `${userRoleFormatted}_orders__
                 element-card-address-${orderId}` }
-            >
-              { address }
-            </div>
+          >
+            { address }
           </div>
         </div>
       </div>
