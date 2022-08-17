@@ -1,9 +1,11 @@
 const { Router } = require('express');
 const jwt = require('jsonwebtoken');
-const { JWT_SUPER_SECRET } = require('../constants');
 const { User, Sales, Products } = require('../database/models');
+const extractToken = require('../utils/extractToken');
 
 const routes = Router();
+
+const jwtSuperSecret = extractToken(`${__dirname}/../../jwt.evaluation.key`);
 
 const generateJwtToken = (validity, paylod, superSecret) => {
   const jwtConfig = {
@@ -20,7 +22,7 @@ const validateJwtToken = (req, res, next) => {
     // return next({ code: 401, message: 'Token not found' });
   }
   try {
-    const decoded = jwt.verify(token, JWT_SUPER_SECRET);
+    const decoded = jwt.verify(token, jwtSuperSecret);
     req.userData = { ...decoded };
     next();
   } catch (error) {
@@ -38,7 +40,7 @@ routes.post('/login', async (req, res) => {
     },
     attributes: { exclude: ['password'] },
   });
-  const token = generateJwtToken('7d', result, JWT_SUPER_SECRET);
+  const token = generateJwtToken('7d', result, jwtSuperSecret);
   res.status(200).json({ ...result.dataValues, token });
 });
 

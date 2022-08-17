@@ -1,16 +1,17 @@
 const jwt = require('jsonwebtoken');
-const { JWT_SUPER_SECRET } = require('../constants');
+const extractToken = require('../utils/extractToken');
 require('dotenv').config();
 
 const tokenIsValid = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
+    const jwtSuperSecret = extractToken(`${__dirname}/../../jwt.evaluation.key`);
 
     if (!token) {
       return res.status(401).json({ message: 'Token not found' });
     }    
 
-    const decoded = jwt.verify(token, JWT_SUPER_SECRET);
+    const decoded = jwt.verify(token, jwtSuperSecret);
 
     req.user = decoded;
 
