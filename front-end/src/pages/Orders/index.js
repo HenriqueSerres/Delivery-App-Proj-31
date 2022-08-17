@@ -1,30 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import fetchAllOrders from '../../services/fetchOrders';
+import { useContext } from 'react';
 import { URL_ORDERS } from '../../helpers/constants';
 import Header from '../../components/Products/Header';
 import OrderCard from '../../components/OrderCard';
+import Context from '../../context/Context';
+import formatDate from '../../helpers/formatDate';
 
 function Orders() {
-  const [customerOrders, setCustomerOrders] = useState([]);
-
-  const history = useHistory();
-
-  useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('user'));
-    if (userData.role !== 'customer') {
-      alert('Você não é um cliente >:(');
-      history.push('/login');
-    } else {
-      const getOrders = async () => {
-        const { token } = userData;
-        const orders = await fetchAllOrders(URL_ORDERS, token);
-        setCustomerOrders(orders);
-      };
-      console.log(userData);
-      getOrders();
-    }
-  }, []);
+  const { customerOrders } = useContext(Context);
 
   return (
     <div className="customer-orders">
@@ -40,7 +22,7 @@ function Orders() {
               <OrderCard
                 orderId={ order.id }
                 status={ order.status }
-                orderDate={ order.saleDate }
+                orderDate={ formatDate(new Date(order.saleDate)) }
                 totalPrice={ Number(order.totalPrice) }
                 pathRoute={ URL_ORDERS }
                 userRole="customer"
