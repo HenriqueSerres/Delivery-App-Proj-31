@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import fetchAllOrders from '../../services/fetchOrders';
 import { HTTP_UNAUTHORIZED, URL_ORDERS } from '../../helpers/constants';
 import formatDate from '../../helpers/formatDate';
 
 const ContextCustomerOrders = () => {
   const [customerOrders, setCustomerOrders] = useState([]);
+
+  const history = useHistory();
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('user'));
