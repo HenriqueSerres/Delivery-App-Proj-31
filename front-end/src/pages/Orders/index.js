@@ -1,8 +1,9 @@
 import { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Header from '../../components/Products/Header';
 import OrderCard from '../../components/OrderCard';
 import Context from '../../context/Context';
-import { useHistory } from 'react-router-dom';
 
 function Orders({ match: { path } }) {
   const { customerOrders } = useContext(Context);
@@ -36,5 +37,19 @@ function Orders({ match: { path } }) {
     </div>
   );
 }
+
+Orders.propTypes = {
+  match: PropTypes.shape({
+    isExact: PropTypes.bool,
+    params: PropTypes.objectOf(PropTypes.string),
+    path: PropTypes.string,
+  }),
+  path: PropTypes.string,
+};
+
+Orders.defaultProps = {
+  match: {},
+  path: '',
+};
 
 export default Orders;
