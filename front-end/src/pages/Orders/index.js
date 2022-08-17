@@ -1,13 +1,20 @@
 import { useContext } from 'react';
-import { URL_ORDERS } from '../../helpers/constants';
 import Header from '../../components/Products/Header';
 import OrderCard from '../../components/OrderCard';
 import Context from '../../context/Context';
-import formatDate from '../../helpers/formatDate';
+import { useHistory } from 'react-router-dom';
 
-function Orders() {
+function Orders({ match: { path } }) {
   const { customerOrders } = useContext(Context);
 
+  const history = useHistory();
+
+  const userData = JSON.parse(localStorage.getItem('user')) || {};
+
+  if (userData.role !== 'customer') {
+    alert('Você não é um cliente :(');
+    history.push('/login');
+  }
   return (
     <div className="customer-orders">
       <Header />
@@ -15,19 +22,15 @@ function Orders() {
         { customerOrders.length === 0
           ? (<h1>Você ainda não tem pedidos</h1>)
           : customerOrders.map((order) => (
-            <div
+            <OrderCard
               key={ order.id }
-              data-testid={ `customer_products__element-order-date-${order.id}` }
-            >
-              <OrderCard
-                orderId={ order.id }
-                status={ order.status }
-                orderDate={ formatDate(new Date(order.saleDate)) }
-                totalPrice={ Number(order.totalPrice) }
-                pathRoute={ URL_ORDERS }
-                userRole="customer"
-              />
-            </div>
+              orderId={ order.id }
+              status={ order.status }
+              orderDate={ order.saleDate }
+              totalPrice={ Number(order.totalPrice) }
+              pathRoute={ path }
+              userRole="customer"
+            />
           ))}
       </div>
     </div>
