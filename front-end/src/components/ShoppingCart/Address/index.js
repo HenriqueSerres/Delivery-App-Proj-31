@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Address({ sellers, setAddress, setTeste }) {
-  console.log(sellers);
   return (
     <>
       <label htmlFor="customer_checkout__select-seller">

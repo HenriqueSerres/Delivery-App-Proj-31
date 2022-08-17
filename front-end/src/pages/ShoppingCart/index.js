@@ -9,9 +9,9 @@ import { axiosRequestToken, getAxiosRequestSellers } from '../../services';
 
 function ShoppingCart() {
   const { total, shoppingCartItems,
-    setShoppingCartItems, setStoreItems } = useContext(Context);
+    setShoppingCartItems } = useContext(Context);
   const [sellers, setSellers] = useState([]);
-  const [teste, setTeste] = useState(0);
+  const [teste, setTeste] = useState();
   const [address, setAddress] = useState({
     clientAddress: '',
     clientNumber: '',
@@ -28,6 +28,7 @@ function ShoppingCart() {
     const getSellers = async () => {
       const sellersAxios = await getAxiosRequestSellers();
       setSellers(sellersAxios);
+      setTeste(sellersAxios[0].id);
     };
     getSellers();
   }, []);
@@ -35,7 +36,6 @@ function ShoppingCart() {
   const history = useHistory();
 
   const handleClick = async () => {
-    console.log('XXXX', teste);
     const data = {
       sellerId: teste,
       totalPrice: Number(total),
@@ -46,13 +46,6 @@ function ShoppingCart() {
     };
     const a = await axiosRequestToken(URL_ORDERS, data);
     if (a?.statusText?.includes('Created')) {
-      const filterItems = data.products.reduce((acc, curr) => {
-        const { status, saleDate, totalPrice } = curr;
-        acc.push({ status, saleDate, totalPrice });
-        return acc;
-      }, []);
-      console.log(filterItems);
-      setStoreItems(filterItems);
       const orderId = a.data.id;
       history.push(`/customer/orders/${orderId}`);
     }
