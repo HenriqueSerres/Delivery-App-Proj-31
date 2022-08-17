@@ -1,5 +1,4 @@
 const cryptoJs = require('crypto-js');
-const { JWT_SUPER_SECRET } = require('../constants');
 const { User } = require('../database/models');
 const generateJWT = require('../utils/generateToken');
 
@@ -10,7 +9,7 @@ const register = async (name, email, password, role) => {
   if (Object.keys(user).includes('password')) {
     delete user.password;
   }  
-  const token = generateJWT('10d', user, JWT_SUPER_SECRET);
+  const token = generateJWT('10d', user);
   return {
     ...user,
     token,
