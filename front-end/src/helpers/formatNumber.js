@@ -7,13 +7,19 @@ export const formatNumber = (number) => {
 };
 
 export const formatOrderNumber = (number) => {
+  const one = 1;
+  const two = 2;
+  const three = 3;
   const { length } = String(number);
   if (typeof number !== 'number') return 'NaN';
   switch (true) {
-  case length === 1:
+  case length === one:
+    return `000${number}`;
+
+  case length === two:
     return `00${number}`;
 
-  case length === 2:
+  case length === three:
     return `0${number}`;
 
   default:

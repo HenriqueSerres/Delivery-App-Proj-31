@@ -40,9 +40,23 @@ const findAnUserOrder = async (req, res, next) => {
   }
 };
 
+const upDateOrder = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { role } = req.user.data;
+    const { status } = req.body;
+    const editedOrder = await salesService.upDateOrder({ id, role, status });
+    return res.status(200).json(editedOrder);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 module.exports = {
   findOrders,
   addNewOrder,
   getAllSellers,
   findAnUserOrder,
+  upDateOrder,
 };
