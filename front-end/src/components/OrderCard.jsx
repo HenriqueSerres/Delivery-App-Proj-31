@@ -83,12 +83,12 @@ function OrderCard({
               }
             </div>
           </div>
-        </div>
-        <div
-          className="button-card-info-2-address"
-          data-testid={ `${userRoleFormatted}_orders__element-card-address-${orderId}` }
-        >
-          { address }
+          <div
+            className="button-card-info-2-address"
+            data-testid={ `${userRoleFormatted}_orders__element-card-address-${orderId}` }
+          >
+            { address }
+          </div>
         </div>
       </div>
     </button>
