@@ -14,7 +14,7 @@ const addNewOrder = async (req, res, next) => {
   try {
     const { id, role } = req.user.data;
     const newOrder = await salesService.addNewOrder(id, role, req.body);
-  return res.status(200).json(newOrder);
+  return res.status(201).json(newOrder);
   } catch (error) {
     next(error);
   }

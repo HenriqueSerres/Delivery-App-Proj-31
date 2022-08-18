@@ -37,9 +37,10 @@ const filterUserOrderbyId = async (orderId, data) => {
 };
 
 const addNewOrder = async (id, role, body) => {
+  const saleDate = new Date();
   const { sellerId, products, ...payload } = body;
   if (role !== 'customer') throw handleError(401, 'Unauthorized');
-  const order = { userId: id, sellerId, products, ...payload };
+  const order = { userId: id, sellerId, products, saleDate, ...payload };
   const t = await sequelize.transaction();
   try {
     const newOrder = await Sales.create(order, { transaction: t });

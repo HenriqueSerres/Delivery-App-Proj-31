@@ -1,11 +1,21 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Header from '../../components/Products/Header';
 import Address from '../../components/ShoppingCart/Address';
 import Cart from '../../components/ShoppingCart/Cart';
 import Context from '../../context/Context';
+import { URL_ORDERS } from '../../helpers/constants';
+import { axiosRequestToken, getAxiosRequestSellers } from '../../services';
 
 function ShoppingCart() {
-  const { total, shoppingCartItems, setShoppingCartItems } = useContext(Context);
+  const { total, shoppingCartItems,
+    setShoppingCartItems } = useContext(Context);
+  const [sellers, setSellers] = useState([]);
+  const [idSeller, setIdSeller] = useState();
+  const [address, setAddress] = useState({
+    clientAddress: '',
+    clientNumber: '',
+  });
 
   useEffect(() => {
     const funcao = () => (
@@ -13,6 +23,33 @@ function ShoppingCart() {
     );
     setShoppingCartItems(funcao());
   }, []);
+
+  useEffect(() => {
+    const getSellers = async () => {
+      const sellersAxios = await getAxiosRequestSellers();
+      setSellers(sellersAxios);
+      setIdSeller(sellersAxios[0].id);
+    };
+    getSellers();
+  }, []);
+
+  const history = useHistory();
+
+  const handleClick = async () => {
+    const data = {
+      sellerId: idSeller,
+      totalPrice: Number(total),
+      deliveryAddress: address.clientAddress,
+      deliveryNumber: address.clientNumber,
+      status: 'Pendente',
+      products: shoppingCartItems,
+    };
+    const a = await axiosRequestToken(URL_ORDERS, data);
+    if (a?.statusText?.includes('Created')) {
+      const orderId = a.data.id;
+      history.push(`/customer/orders/${orderId}`);
+    }
+  };
 
   return (
     <div>
@@ -51,10 +88,15 @@ function ShoppingCart() {
         {`R$ ${total.toString().replace('.', ',')}`}
       </h2>
       <h3>Detalhes e endereço para entrega</h3>
-      <Address />
+      <Address
+        sellers={ sellers }
+        setAddress={ setAddress }
+        setIdSeller={ setIdSeller }
+      />
       <button
         type="button"
         data-testid="customer_checkout__button-submit-order"
+        onClick={ () => handleClick() }
       >
         Finalizar Pedido
       </button>

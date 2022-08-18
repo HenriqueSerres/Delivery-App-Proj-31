@@ -22,6 +22,25 @@ function Login() {
 
   const history = useHistory();
 
+  const redirectUser = (userRole) => {
+    switch (userRole) {
+    case 'customer':
+      history.push('/customer/products');
+      break;
+
+    case 'seller':
+      history.push('/seller/orders');
+      break;
+
+    case 'administrator':
+      history.push('/admin/manage');
+      break;
+
+    default:
+      break;
+    }
+  };
+
   const handleClick = async () => {
     const postLoginInfo = await axiosRequest(URL_LOGIN, 'POST', {
       email: emailLogin,
@@ -34,7 +53,7 @@ function Login() {
     const { name, email, role, token } = postLoginInfo.data;
     localStorage.setItem('user', JSON.stringify({ name, email, role, token }));
     if (postLoginInfo.status === STATUS_CODE_OK) {
-      history.push('/customer/products');
+      redirectUser(role);
     }
   };
 

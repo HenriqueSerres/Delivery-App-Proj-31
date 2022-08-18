@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react';
 const ContextShoppingCart = () => {
   const [shoppingCart, setShoppingCart] = useState([]);
   const [shoppingCartItems, setShoppingCartItems] = useState();
+  const [storeItems, setStoreItems] = useState([]);
 
   useEffect(() => {
     let cartItemsData = localStorage.getItem('carrinho');
     cartItemsData = JSON.parse(cartItemsData);
-    console.log(cartItemsData);
     setShoppingCartItems(cartItemsData);
   }, []);
 
@@ -16,6 +16,8 @@ const ContextShoppingCart = () => {
     setShoppingCart,
     shoppingCartItems,
     setShoppingCartItems,
+    storeItems,
+    setStoreItems,
   };
 
   return { contextShoppingCart };
