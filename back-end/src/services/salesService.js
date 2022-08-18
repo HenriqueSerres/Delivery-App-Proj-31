@@ -63,9 +63,28 @@ const getAllSellers = async () => {
   return sellers;
 };
 
+const upDateOrder = async ({ id, role, status }) => {
+  const statusFormated = status.toLowerCase();
+  const roleFormated = role.toLowerCase();
+  const order = await Sales.findOne({ where: { id } });
+  if (!order) throw handleError('404', 'Order is not found');
+  if (roleFormated === 'seller') {
+    await Sales.update({ status: statusFormated }, { where: { id } });
+    const editedOrderBySeller = await Sales.findByPk(id);
+    return editedOrderBySeller;
+  }
+  if (roleFormated === 'customer' && statusFormated === 'entregue') {
+    await Sales.update({ status: statusFormated }, { where: { id } });
+    const editedOrderByCustomer = await Sales.findByPk(id);
+    return editedOrderByCustomer;
+  }
+  throw handleError(401, 'Unauthorized');
+};
+
 module.exports = {
   filterAllOrders,
   addNewOrder,
   getAllSellers,
   filterUserOrderbyId,
+  upDateOrder,
 };

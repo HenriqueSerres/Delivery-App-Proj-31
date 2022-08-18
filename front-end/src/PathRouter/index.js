@@ -13,6 +13,7 @@ function PathRouter() {
       <Route path="/login" component={ Login } />
       <Route path="/register" component={ Register } />
       <Route path="/customer/products" component={ Products } />
+      <Route path="/customer/orders" component={ Orders } />
       <Route path="/customer/checkout" component={ ShoppingCart } />
       <Route path="/customer/orders/:id" component={ Orders } />
       {/* <Route exact path="/" component={ Login } /> */}
