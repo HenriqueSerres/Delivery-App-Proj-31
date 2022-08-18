@@ -13,7 +13,6 @@ function Orders({ match: { path } }) {
   const userData = JSON.parse(localStorage.getItem('user')) || {};
 
   if (userData.role !== 'customer') {
-    alert('Você não é um cliente :(');
     history.push('/login');
   }
   return (
