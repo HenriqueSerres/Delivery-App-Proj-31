@@ -11,7 +11,7 @@ function ShoppingCart() {
   const { total, shoppingCartItems,
     setShoppingCartItems } = useContext(Context);
   const [sellers, setSellers] = useState([]);
-  const [teste, setTeste] = useState();
+  const [idSeller, setIdSeller] = useState();
   const [address, setAddress] = useState({
     clientAddress: '',
     clientNumber: '',
@@ -28,7 +28,7 @@ function ShoppingCart() {
     const getSellers = async () => {
       const sellersAxios = await getAxiosRequestSellers();
       setSellers(sellersAxios);
-      setTeste(sellersAxios[0].id);
+      setIdSeller(sellersAxios[0].id);
     };
     getSellers();
   }, []);
@@ -37,7 +37,7 @@ function ShoppingCart() {
 
   const handleClick = async () => {
     const data = {
-      sellerId: teste,
+      sellerId: idSeller,
       totalPrice: Number(total),
       deliveryAddress: address.clientAddress,
       deliveryNumber: address.clientNumber,
@@ -88,7 +88,11 @@ function ShoppingCart() {
         {`R$ ${total.toString().replace('.', ',')}`}
       </h2>
       <h3>Detalhes e endereço para entrega</h3>
-      <Address sellers={ sellers } setAddress={ setAddress } setTeste={ setTeste } />
+      <Address
+        sellers={ sellers }
+        setAddress={ setAddress }
+        setIdSeller={ setIdSeller }
+      />
       <button
         type="button"
         data-testid="customer_checkout__button-submit-order"

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Address({ sellers, setAddress, setTeste }) {
+function Address({ sellers, setAddress, setIdSeller }) {
   return (
     <>
       <label htmlFor="customer_checkout__select-seller">
@@ -11,7 +11,7 @@ function Address({ sellers, setAddress, setTeste }) {
           data-testid="customer_checkout__select-seller"
           onClick={ ({ target }) => {
             const sellerId = target.options[target.selectedIndex].id;
-            setTeste(+sellerId);
+            setIdSeller(+sellerId);
           } }
         >
           {
