@@ -29,7 +29,7 @@ function ContextProducts() {
       return item;
     });
     totalPrice(shoppingCartNewQuantity);
-    localStorage.setItem('cart', JSON.stringify(shoppingCartNewQuantity));
+    localStorage.setItem('carrinho', JSON.stringify(shoppingCartNewQuantity));
     return store;
   };
 
@@ -43,7 +43,7 @@ function ContextProducts() {
       return item;
     });
     totalPrice(shoppingCartNewQuantity);
-    localStorage.setItem('cart', JSON.stringify(shoppingCartNewQuantity));
+    localStorage.setItem('carrinho', JSON.stringify(shoppingCartNewQuantity));
     return store;
   };
 
@@ -53,8 +53,8 @@ function ContextProducts() {
     setTotal,
     decreaseQuantity,
     increaseQuantity,
+    calculateTotalPrice,
     totalPrice };
-
   return { contextProductsObj };
 }
 

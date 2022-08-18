@@ -18,7 +18,7 @@ module.exports = {
           key: 'id',
         },
       },
-      saller_id: {
+      seller_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         onUpdate: 'CASCADE',
@@ -30,7 +30,7 @@ module.exports = {
       },
       total_price: {
         allowNull: false,
-        type: Sequelize.FLOAT,
+        type: Sequelize.DECIMAL(9,2),
       },
       delivery_address: {
         allowNull: false,

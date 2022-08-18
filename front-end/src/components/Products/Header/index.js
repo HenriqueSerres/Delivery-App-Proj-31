@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Container from './styles';
-
 function Header() {
   const [name, setName] = useState('');
 
   const history = useHistory();
 
   useEffect(() => {
-    const getFromLocal = JSON.parse(localStorage.getItem('userData'));
+    const getFromLocal = JSON.parse(localStorage.getItem('user'));
     setName(getFromLocal !== null ? getFromLocal.name : '');
   }, []);
 
   return (
-    <Container>
+    <div>
       {/* Header */}
       {/* Produtos */}
       <button
         type="button"
         data-testid="customer_products__element-navbar-link-products"
-        onClick={ () => history.push('/') }
+        onClick={ () => history.push('/customer/products') }
       >
         Produtos
       </button>
@@ -28,7 +26,7 @@ function Header() {
       <button
         type="button"
         data-testid="customer_products__element-navbar-link-orders"
-        onClick={ () => history.push('/') }
+        onClick={ () => history.push('/customer/checkout') }
       >
         Meus Pedidos
       </button>
@@ -38,11 +36,14 @@ function Header() {
       <button
         data-testid="customer_products__element-navbar-link-logout"
         type="button"
-        onClick={ () => navigate('/') }
+        onClick={ () => {
+          localStorage.clear();
+          history.push('/');
+        } }
       >
         sair
       </button>
-    </Container>
+    </div>
   );
 }
 

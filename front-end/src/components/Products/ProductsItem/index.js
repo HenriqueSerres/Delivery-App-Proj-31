@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import Context from '../../../context/Context';
 
-import { Container } from './styles';
-
 function ProductsItem({ product }) {
   const { id, price, name, urlImage } = product;
 
@@ -30,7 +28,7 @@ function ProductsItem({ product }) {
   };
 
   return (
-    <Container>
+    <div>
       Imagem
       <img
         src={ urlImage }
@@ -39,10 +37,12 @@ function ProductsItem({ product }) {
       />
       {/* name */}
       {/* Name */}
-      <h3 data-testid={ `customer_products__element-card-name-${id}` }>{name}</h3>
+      <h3 data-testid={ `customer_products__element-card-title-${id}` }>{name}</h3>
       {/* Preço */}
       <p data-testid={ `customer_products__element-card-price-${id}` }>
-        {price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+        R$
+        {' '}
+        {price.replace('.', ',')}
       </p>
       <article>
         <button
@@ -67,7 +67,7 @@ function ProductsItem({ product }) {
           +
         </button>
       </article>
-    </Container>
+    </div>
   );
 }
 
