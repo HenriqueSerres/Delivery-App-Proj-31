@@ -1,31 +1,31 @@
-import { useEffect, useState } from 'react';
-import validateEmail from '../../helpers/data';
-import { MIN_LENGTH_LOGIN } from '../../helpers/constants';
+// import { useEffect, useState } from 'react';
+// import validateEmail from '../../helpers/data';
+// import { MIN_LENGTH_LOGIN } from '../../helpers/constants';
 
-const ContextLogin = () => {
-  const [emailLogin, setEmailLogin] = useState('');
-  const [passwordLogin, setPasswordLogin] = useState('');
-  const [disabledLogin, setDisabledLogin] = useState(true);
+// const ContextLogin = () => {
+// const [emailLogin, setEmailLogin] = useState('');
+// const [passwordLogin, setPasswordLogin] = useState('');
+// const [disabledLogin, setDisabledLogin] = useState(true);
 
-  useEffect(() => {
-    const emailCheck = validateEmail(emailLogin);
-    const passwordCheck = passwordLogin.length >= MIN_LENGTH_LOGIN;
-    if (emailCheck && passwordCheck) {
-      setDisabledLogin(false);
-    } else {
-      setDisabledLogin(true);
-    }
-  }, [emailLogin, passwordLogin]);
+// useEffect(() => {
+//   const emailCheck = validateEmail(emailLogin);
+//   const passwordCheck = passwordLogin.length >= MIN_LENGTH_LOGIN;
+//   if (emailCheck && passwordCheck) {
+//     setDisabledLogin(false);
+//   } else {
+//     setDisabledLogin(true);
+//   }
+// }, [emailLogin, passwordLogin]);
 
-  const contextLoginObj = {
-    emailLogin,
-    setEmailLogin,
-    passwordLogin,
-    setPasswordLogin,
-    disabledLogin,
-  };
+//   const contextLoginObj = {
+//     emailLogin,
+//     setEmailLogin,
+//     passwordLogin,
+//     setPasswordLogin,
+//     disabledLogin,
+//   };
 
-  return { contextLoginObj };
-};
+//   return { contextLoginObj };
+// };
 
-export default ContextLogin;
+// export default ContextLogin;

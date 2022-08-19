@@ -1,19 +1,44 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import Context from '../../../context/Context';
-
-function ProductsItem({ product }) {
+function ProductsItem({ product, setTotal, shoppingCart }) {
   const { id, price, name, urlImage } = product;
 
   const [valuePrice, setValuePrice] = useState(0);
 
-  const {
-    increaseQuantity,
-    decreaseQuantity,
-    shoppingCart,
-    totalPrice,
-  } = useContext(Context);
+  const calculateTotalPrice = (cart) => cart
+    .reduce((acc, curr) => acc + Number(curr.quantity) * Number(curr.price), 0)
+    .toFixed(2);
+
+  const totalPrice = (cart) => setTotal(calculateTotalPrice(cart));
+
+  const decreaseQuantity = (nameItem, shoppingCartItem) => {
+    let store;
+    const shoppingCartNewQuantity = shoppingCartItem.map((item) => {
+      if (item.name === nameItem && item.quantity !== 0) {
+        item.quantity -= 1;
+        store = item.quantity;
+      }
+      return item;
+    });
+    totalPrice(shoppingCartNewQuantity);
+    localStorage.setItem('carrinho', JSON.stringify(shoppingCartNewQuantity));
+    return store;
+  };
+
+  const increaseQuantity = (nameItem, shoppingCartItems) => {
+    let store;
+    const shoppingCartNewQuantity = shoppingCartItems.map((item) => {
+      if (item.name === nameItem) {
+        item.quantity += 1;
+        store = item.quantity;
+      }
+      return item;
+    });
+    totalPrice(shoppingCartNewQuantity);
+    localStorage.setItem('carrinho', JSON.stringify(shoppingCartNewQuantity));
+    return store;
+  };
 
   const handleChange = ({ value }) => {
     const shoppingCartNewQuantity = shoppingCart.map((item) => {

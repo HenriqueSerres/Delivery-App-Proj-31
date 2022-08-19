@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
 import { getAxiosRequest } from '../../services/index';
@@ -6,7 +6,6 @@ import { getAxiosRequest } from '../../services/index';
 import Header from '../../components/Products/Header';
 
 import ProductsItem from '../../components/Products/ProductsItem';
-import Context from '../../context/Context';
 
 import './styles.css';
 
@@ -14,7 +13,16 @@ const eleven = 11;
 
 function Products() {
   const [productsData, setProductsData] = useState([]);
-  const { total, setShoppingCart } = useContext(Context);
+  const [total, setTotal] = useState(0);
+  const [shoppingCart, setShoppingCart] = useState([]);
+
+  useEffect(() => {
+    const getInfoProducts = async () => {
+      const getData = await getAxiosRequest();
+      setProductsData(getData);
+    };
+    getInfoProducts();
+  }, []);
 
   const history = useHistory();
 
@@ -39,7 +47,12 @@ function Products() {
       <div>
         {productsData !== undefined
           && productsData.map((product) => (
-            <ProductsItem product={ product } key={ product.id } />
+            <ProductsItem
+              product={ product }
+              shoppingCart={ shoppingCart }
+              setTotal={ setTotal }
+              key={ product.id }
+            />
           ))}
       </div>
       <button

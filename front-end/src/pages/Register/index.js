@@ -1,24 +1,30 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import validateEmail from '../../helpers/data';
 
-import Context from '../../context/Context';
 import Input from '../../components/GenericInput';
 
 import { axiosRequest } from '../../services/index';
-import { URL_REGISTER } from '../../helpers/constants';
+import { URL_REGISTER, MIN_LENGTH_LOGIN } from '../../helpers/constants';
 
 const STATUS_CODE_CREATED = 201;
 
 function Register() {
-  const {
-    nameRegister,
-    setNameRegister,
-    emailRegister,
-    setEmailRegister,
-    passwordRegister,
-    setPasswordRegister,
-    disabledRegister,
-  } = useContext(Context);
+  const [nameRegister, setNameRegister] = useState('');
+  const [emailRegister, setEmailRegister] = useState('');
+  const [passwordRegister, setPasswordRegister] = useState('');
+  const [disabledRegister, setDisabledRegister] = useState(true);
+
+  useEffect(() => {
+    const nameCheck = nameRegister.length >= 2 * MIN_LENGTH_LOGIN;
+    const emailCheck = validateEmail(emailRegister);
+    const passwordCheck = passwordRegister.length >= MIN_LENGTH_LOGIN;
+    if (nameCheck && emailCheck && passwordCheck) {
+      setDisabledRegister(false);
+    } else {
+      setDisabledRegister(true);
+    }
+  }, [nameRegister, emailRegister, passwordRegister]);
 
   const history = useHistory();
 

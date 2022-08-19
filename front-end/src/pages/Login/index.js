@@ -1,24 +1,29 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import validateEmail from '../../helpers/data';
 
-import Context from '../../context/Context';
 import Input from '../../components/GenericInput';
 
 import { axiosRequest } from '../../services/index';
-import { URL_LOGIN } from '../../helpers/constants';
+import { URL_LOGIN, MIN_LENGTH_LOGIN } from '../../helpers/constants';
 
 const STATUS_CODE_OK = 200;
 
 function Login() {
   const [verify, setVerify] = useState(false);
+  const [emailLogin, setEmailLogin] = useState('');
+  const [passwordLogin, setPasswordLogin] = useState('');
+  const [disabledLogin, setDisabledLogin] = useState(true);
 
-  const {
-    emailLogin,
-    setEmailLogin,
-    passwordLogin,
-    setPasswordLogin,
-    disabledLogin,
-  } = useContext(Context);
+  useEffect(() => {
+    const emailCheck = validateEmail(emailLogin);
+    const passwordCheck = passwordLogin.length >= MIN_LENGTH_LOGIN;
+    if (emailCheck && passwordCheck) {
+      setDisabledLogin(false);
+    } else {
+      setDisabledLogin(true);
+    }
+  }, [emailLogin, passwordLogin]);
 
   const history = useHistory();
 
@@ -37,6 +42,7 @@ function Login() {
       break;
 
     default:
+      history.push('/register');
       break;
     }
   };

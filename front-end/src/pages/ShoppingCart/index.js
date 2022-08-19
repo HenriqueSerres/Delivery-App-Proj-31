@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../../components/Products/Header';
 import Address from '../../components/ShoppingCart/Address';
 import Cart from '../../components/ShoppingCart/Cart';
-import Context from '../../context/Context';
 import { URL_ORDERS } from '../../helpers/constants';
 import { axiosRequestToken, getAxiosRequestSellers } from '../../services';
 
 function ShoppingCart() {
-  const { total, shoppingCartItems,
-    setShoppingCartItems } = useContext(Context);
+  const [shoppingCartItems, setShoppingCartItems] = useState();
+  const [total, setTotal] = useState(0);
   const [sellers, setSellers] = useState([]);
   const [idSeller, setIdSeller] = useState();
   const [address, setAddress] = useState({
@@ -21,7 +20,11 @@ function ShoppingCart() {
     const funcao = () => (
       JSON.parse(localStorage.getItem('carrinho'))
     );
+    const calculateTotalPrice = (cart) => cart
+      .reduce((acc, curr) => acc + Number(curr.quantity) * Number(curr.price), 0)
+      .toFixed(2);
     setShoppingCartItems(funcao());
+    setTotal(calculateTotalPrice(funcao()));
   }, []);
 
   useEffect(() => {
@@ -35,6 +38,12 @@ function ShoppingCart() {
 
   const history = useHistory();
 
+  useEffect(() => {
+    let cartItemsData = localStorage.getItem('carrinho');
+    cartItemsData = JSON.parse(cartItemsData);
+    setShoppingCartItems(cartItemsData);
+  }, []);
+
   const handleClick = async () => {
     const data = {
       sellerId: idSeller,
@@ -45,6 +54,7 @@ function ShoppingCart() {
       products: shoppingCartItems,
     };
     const a = await axiosRequestToken(URL_ORDERS, data);
+    console.log(a);
     if (a?.statusText?.includes('Created')) {
       const orderId = a.data.id;
       history.push(`/customer/orders/${orderId}`);
