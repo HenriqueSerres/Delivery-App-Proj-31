@@ -58,8 +58,8 @@ function Login() {
       password: passwordLogin,
     }).then((response) => {
       if (
-       response.message !== undefined
-        &&response.message.includes('404')
+        response.message !== undefined
+        && response.message.includes('404')
       ) return setVerify(true);
       const { name, email, role, token } = response.data;
       localStorage.setItem('user', JSON.stringify({ name, email, role, token }));
