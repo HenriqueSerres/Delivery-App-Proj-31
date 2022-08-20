@@ -1,12 +1,40 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import OrderCard from '../components/OrderCard';
-import Context from '../context/Context';
 import '../styles/styles-pages/sellerOrders.css';
 import Header from '../components/Products/Header';
+import { useHistory } from 'react-router-dom';
+import fetchAllOrders from '../services/fetchOrders';
+import formatDate from '../helpers/formatDate';
+import { HTTP_UNAUTHORIZED } from '../helpers/constants';
 
 function SellerOrders({ match: { path } }) {
-  const { stateAllOrders, stateDisplayPage } = useContext(Context);
+  const [stateAllOrders, setStateAllOrders] = useState([]);
+  const [stateDisplayPage, setStateDisplayPage] = useState(false);
+
+  const history = useHistory();
+
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('user'));
+    if (!userData || userData.role !== 'seller') history.push('/login');
+    fetchAllOrders('http://localhost:3001/orders', userData.token)
+      .then((data) => {
+        if (Array.isArray(data) && !Object.keys(data).includes('message')) {
+          const dataFormatted = data.map((elementObj) => {
+            const order = elementObj;
+            const saleDate = new Date(order.saleDate);
+            order.saleDate = formatDate(saleDate);
+            return order;
+          });
+          setStateAllOrders(dataFormatted);
+          setStateDisplayPage(true);
+        } else {
+          if (data.httpStatusCode === HTTP_UNAUTHORIZED) history.push('/login');
+          return [];
+        }
+      }).catch((error) => console.error(error));
+  }, []);
+
   return (
     <section>
       {stateDisplayPage ? (
