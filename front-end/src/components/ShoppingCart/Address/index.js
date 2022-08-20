@@ -7,7 +7,6 @@ function Address({ sellers, setAddress, setIdSeller }) {
       <label htmlFor="customer_checkout__select-seller">
         P. Vendedor Responsável
         <select
-          name=""
           data-testid="customer_checkout__select-seller"
           onClick={ ({ target }) => {
             const sellerId = target.options[target.selectedIndex].id;
