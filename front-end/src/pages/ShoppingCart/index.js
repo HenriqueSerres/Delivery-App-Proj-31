@@ -16,36 +16,25 @@ function ShoppingCart() {
     clientNumber: '',
   });
 
-  useEffect(() => {
-    const funcao = () => (
-      JSON.parse(localStorage.getItem('carrinho'))
-    );
-    const calculateTotalPrice = (cart) => cart
-      .reduce((acc, curr) => acc + Number(curr.quantity) * Number(curr.price), 0)
-      .toFixed(2);
-    setShoppingCartItems(funcao());
-    setTotal(calculateTotalPrice(funcao()));
-  }, []);
-
-  useEffect(() => {
-    const getSellers = async () => {
-      const sellersAxios = await getAxiosRequestSellers();
-      setSellers(sellersAxios);
-      setIdSeller(sellersAxios[0].id);
-    };
-    getSellers();
-  }, []);
-
   const history = useHistory();
 
+  const calculateTotalPrice = (cart) => cart
+      .reduce((acc, curr) => acc + Number(curr.quantity) * Number(curr.price), 0);
+
   useEffect(() => {
-    let cartItemsData = localStorage.getItem('carrinho');
-    cartItemsData = JSON.parse(cartItemsData);
-    setShoppingCartItems(cartItemsData);
+    const shoppingCart = JSON.parse(localStorage.getItem('carrinho'))
+      .filter((item) => item.quantity > 0);
+    localStorage.setItem('carrinho', JSON.stringify(shoppingCart));
+    getAxiosRequestSellers().then((response) => {
+      setSellers(response);
+      setIdSeller(response[0].id);
+    });
+    setShoppingCartItems(shoppingCart);
+    setTotal(calculateTotalPrice(shoppingCart));
   }, []);
 
-  const handleClick = async () => {
-    const data = {
+  const handleClick = () => {
+    const requestData = {
       sellerId: idSeller,
       totalPrice: Number(total),
       deliveryAddress: address.clientAddress,
@@ -53,12 +42,21 @@ function ShoppingCart() {
       status: 'Pendente',
       products: shoppingCartItems,
     };
-    const a = await axiosRequestToken(URL_ORDERS, data);
-    console.log(a);
-    if (a?.statusText?.includes('Created')) {
-      const orderId = a.data.id;
-      history.push(`/customer/orders/${orderId}`);
-    }
+    axiosRequestToken(URL_ORDERS, requestData).then((response) => {
+      if (response?.statusText?.includes('Created')) {
+        const orderId = response.data.id;
+        history.push(`/customer/orders/${orderId}`);
+      }
+    }).catch((error) => console.log(error));
+  };
+
+  const removeProduct = (id) => {
+    const shoppingCart = JSON.parse(localStorage.getItem('carrinho'));
+    const filterByNames = shoppingCart.filter((item) => item.id !== id);
+    const calculateTotal = calculateTotalPrice(filterByNames);
+    localStorage.setItem('carrinho', JSON.stringify(filterByNames));
+    setShoppingCartItems(filterByNames);
+    setTotal(calculateTotal);
   };
 
   return (
@@ -80,22 +78,22 @@ function ShoppingCart() {
           {
             shoppingCartItems
             && shoppingCartItems
-              .filter((item) => +item.quantity > 0)
-              .map(({ name, quantity, price }, id) => (
-
+              .map(({ id, name, quantity, price }, index) => (
                 <Cart
-                  id={ id }
+                  key={ `${name}-${index}` }
+                  itemId={ id }
+                  index={ index }
                   name={ name }
                   quantity={ quantity }
                   price={ price }
-                  key={ name }
+                  funcRemoveProduct={ removeProduct }
                 />))
           }
         </tbody>
       </table>
       <h2 data-testid="customer_checkout__element-order-total-price">
         Total:
-        {`R$ ${total.toString().replace('.', ',')}`}
+        { total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }
       </h2>
       <h3>Detalhes e endereço para entrega</h3>
       <Address
