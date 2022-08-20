@@ -3,7 +3,12 @@ import { useHistory } from 'react-router-dom';
 import validateEmail from '../../helpers/data';
 import Input from '../../components/GenericInput';
 import { axiosRequest } from '../../services/index';
-import { URL_REGISTER, MIN_LENGTH_LOGIN } from '../../helpers/constants';
+import {
+  URL_REGISTER,
+  MIN_LENGTH_LOGIN,
+  HTTP_BADREQUEST,
+  HTTP_CONFLICT,
+} from '../../helpers/constants';
 
 const STATUS_CODE_CREATED = 201;
 
@@ -36,8 +41,8 @@ function Register() {
     }).then((res) => {
       if (res.message) {
         const { response } = res;
-        if (response.status === 400) return;
-        if (response.status === 409) return setStateUserAlreadyExist(true);
+        if (response.status === HTTP_BADREQUEST) return;
+        if (response.status === HTTP_CONFLICT) return setStateUserAlreadyExist(true);
       }
       setStateUserAlreadyExist(false);
       const { name, email, role, token } = res.data;
@@ -90,7 +95,11 @@ function Register() {
         </button>
         <p data-testid="common_register__element-invalid_register" />
       </form>
-      <div style={ { display: stateUserAlreadyExist ? 'block' : 'none' } }>Usuário já existe !</div>
+      <div
+        style={ { display: stateUserAlreadyExist ? 'block' : 'none' } }
+      >
+        Usuário já existe !
+      </div>
     </div>
   );
 }
