@@ -22,9 +22,9 @@ function ShoppingCart() {
     .reduce((acc, curr) => acc + Number(curr.quantity) * Number(curr.price), 0);
 
   useEffect(() => {
-    const shoppingCart = JSON.parse(localStorage.getItem('carrinho'))
+    const shoppingCart = JSON.parse(localStorage.getItem('userShoppingCart'))
       .filter((item) => item.quantity > 0);
-    localStorage.setItem('carrinho', JSON.stringify(shoppingCart));
+    localStorage.setItem('userShoppingCart', JSON.stringify(shoppingCart));
     getAxiosRequestSellers().then((response) => {
       setSellers(response);
       setIdSeller(response[0].id);
@@ -51,10 +51,10 @@ function ShoppingCart() {
   };
 
   const removeProduct = (id) => {
-    const shoppingCart = JSON.parse(localStorage.getItem('carrinho'));
+    const shoppingCart = JSON.parse(localStorage.getItem('userShoppingCart'));
     const filterByNames = shoppingCart.filter((item) => item.id !== id);
     const calculateTotal = calculateTotalPrice(filterByNames);
-    localStorage.setItem('carrinho', JSON.stringify(filterByNames));
+    localStorage.setItem('userShoppingCart', JSON.stringify(filterByNames));
     setShoppingCartItems(filterByNames);
     setTotal(calculateTotal);
   };
