@@ -80,7 +80,7 @@ function OrderCard({
               data-testid={ `${userRoleFormatted}_orders__element-card-price-${orderId}` }
             >
               {
-                totalPrice.toFixed(2).replace(/\./,',')
+                totalPrice.toFixed(2).replace(/\./, ',')
               }
             </div>
           </div>
