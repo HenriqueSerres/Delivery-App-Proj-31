@@ -5,8 +5,6 @@ import Header from '../../components/Products/Header';
 import ProductsItem from '../../components/Products/ProductsItem';
 import './styles.css';
 
-const eleven = 11;
-
 function Products() {
   const [productsData, setProductsData] = useState([]);
   const [total, setTotal] = useState(0);
@@ -15,12 +13,13 @@ function Products() {
 
   useEffect(() => {
     getAxiosRequest().then((response) => {
-      const shoppingCartData = response.slice(0, eleven).map(({ name, price, id }) => ({
-        name,
-        price,
-        quantity: 0,
-        id,
-      }));
+      const shoppingCartData = response.slice(0, response.length)
+        .map(({ name, price, id }) => ({
+          name,
+          price,
+          quantity: 0,
+          id,
+        }));
       localStorage.setItem('carrinho', JSON.stringify(shoppingCartData));
       setProductsData(response);
     });
