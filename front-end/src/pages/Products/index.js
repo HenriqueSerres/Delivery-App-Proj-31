@@ -20,7 +20,7 @@ function Products() {
           quantity: 0,
           id,
         }));
-      localStorage.setItem('carrinho', JSON.stringify(shoppingCartData));
+      localStorage.setItem('userShoppingCart', JSON.stringify(shoppingCartData));
       setProductsData(response);
     });
   }, []);
