@@ -1,20 +1,37 @@
-import { useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from '../../components/Products/Header';
 import OrderCard from '../../components/OrderCard';
-import Context from '../../context/Context';
+import fetchAllOrders from '../../services/fetchOrders';
+import { HTTP_UNAUTHORIZED, URL_ORDERS } from '../../helpers/constants';
+import formatDate from '../../helpers/formatDate';
 
 function Orders({ match: { path } }) {
-  const { customerOrders } = useContext(Context);
+  const [customerOrders, setCustomerOrders] = useState([]);
 
   const history = useHistory();
 
-  const userData = JSON.parse(localStorage.getItem('user')) || {};
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('user'));
+    if (!userData || userData.role !== 'customer') history.push('/login');
+    fetchAllOrders(URL_ORDERS, userData.token)
+      .then((data) => {
+        if (Array.isArray(data) && !Object.keys(data).includes('message')) {
+          const dataFormatted = data.map((elementObj) => {
+            const order = elementObj;
+            const saleDate = new Date(order.saleDate);
+            order.saleDate = formatDate(saleDate);
+            return order;
+          });
+          setCustomerOrders(dataFormatted);
+        } else {
+          if (data.httpStatusCode === HTTP_UNAUTHORIZED) history.push('/login');
+          return [];
+        }
+      }).catch((error) => console.error(error));
+  }, []);
 
-  if (userData.role !== 'customer') {
-    history.push('/login');
-  }
   return (
     <div className="customer-orders">
       <Header />
