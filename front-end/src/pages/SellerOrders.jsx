@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import OrderCard from '../components/OrderCard';
 import '../styles/styles-pages/sellerOrders.css';
 import Header from '../components/Products/Header';
-import { useHistory } from 'react-router-dom';
 import fetchAllOrders from '../services/fetchOrders';
 import formatDate from '../helpers/formatDate';
 import { HTTP_UNAUTHORIZED } from '../helpers/constants';
