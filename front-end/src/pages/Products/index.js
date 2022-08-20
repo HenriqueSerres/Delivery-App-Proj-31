@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
-
 import { useHistory } from 'react-router-dom';
 import { getAxiosRequest } from '../../services/index';
-
 import Header from '../../components/Products/Header';
-
 import ProductsItem from '../../components/Products/ProductsItem';
-
 import './styles.css';
 
 const eleven = 11;
@@ -14,32 +10,21 @@ const eleven = 11;
 function Products() {
   const [productsData, setProductsData] = useState([]);
   const [total, setTotal] = useState(0);
-  const [shoppingCart, setShoppingCart] = useState([]);
-
-  useEffect(() => {
-    const getInfoProducts = async () => {
-      const getData = await getAxiosRequest();
-      setProductsData(getData);
-    };
-    getInfoProducts();
-  }, []);
 
   const history = useHistory();
 
   useEffect(() => {
-    const getInfoProducts = async () => {
-      const getData = await getAxiosRequest();
-      setProductsData(getData);
-      const shoppingCartData = getData.slice(0, eleven).map(({ name, price, id }) => ({
+    getAxiosRequest().then((response) => {
+      const shoppingCartData = response.slice(0, eleven).map(({ name, price, id }) => ({
         name,
         price,
         quantity: 0,
         id,
       }));
-      setShoppingCart(shoppingCartData);
-    };
-    getInfoProducts();
-  }, [setShoppingCart]);
+      localStorage.setItem('carrinho', JSON.stringify(shoppingCartData));
+      setProductsData(response);
+    });
+  }, []);
 
   return (
     <div className="main-products">
@@ -49,7 +34,6 @@ function Products() {
           && productsData.map((product) => (
             <ProductsItem
               product={ product }
-              shoppingCart={ shoppingCart }
               setTotal={ setTotal }
               key={ product.id }
             />
@@ -62,7 +46,8 @@ function Products() {
         onClick={ () => history.push('/customer/checkout') }
       >
         <span data-testid="customer_products__checkout-bottom-value">
-          {`Ver Carrinho: ${total.toString().replace('.', ',')}`}
+          Ver Carrinho:
+          { ` ${total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}` }
         </span>
       </button>
     </div>
