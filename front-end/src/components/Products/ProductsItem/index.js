@@ -12,7 +12,9 @@ function ProductsItem({ product, setTotal }) {
   const totalPrice = (cart) => setTotal(calculateTotalPrice(cart));
 
   const decreaseQuantity = (nameItem) => {
-    const storageShoppingCart = JSON.parse(localStorage.getItem('carrinho')) || [];
+    const storageShoppingCart = JSON.parse(
+      localStorage.getItem('userShoppingCart'),
+    ) || [];
     let store;
     const shoppingCartNewQuantity = storageShoppingCart.map((item) => {
       if (item.name === nameItem) {
@@ -22,12 +24,14 @@ function ProductsItem({ product, setTotal }) {
       return item;
     });
     totalPrice(shoppingCartNewQuantity);
-    localStorage.setItem('carrinho', JSON.stringify(shoppingCartNewQuantity));
+    localStorage.setItem('userShoppingCart', JSON.stringify(shoppingCartNewQuantity));
     return store;
   };
 
   const increaseQuantity = (nameItem) => {
-    const storageShoppingCart = JSON.parse(localStorage.getItem('carrinho')) || [];
+    const storageShoppingCart = JSON.parse(
+      localStorage.getItem('userShoppingCart'),
+    ) || [];
     let store;
     const shoppingCartNewQuantity = storageShoppingCart.map((item) => {
       if (item.name === nameItem) {
@@ -37,12 +41,14 @@ function ProductsItem({ product, setTotal }) {
       return item;
     });
     totalPrice(shoppingCartNewQuantity);
-    localStorage.setItem('carrinho', JSON.stringify(shoppingCartNewQuantity));
+    localStorage.setItem('userShoppingCart', JSON.stringify(shoppingCartNewQuantity));
     return store;
   };
 
   const handleChange = ({ value }) => {
-    const storageShoppingCart = JSON.parse(localStorage.getItem('carrinho')) || [];
+    const storageShoppingCart = JSON.parse(
+      localStorage.getItem('userShoppingCart'),
+    ) || [];
     const shoppingCartNewQuantity = storageShoppingCart.map((elementObj) => {
       const item = { ...elementObj };
       if (item.id === id) {
@@ -51,7 +57,7 @@ function ProductsItem({ product, setTotal }) {
       }
       return item;
     });
-    localStorage.setItem('carrinho', JSON.stringify(shoppingCartNewQuantity));
+    localStorage.setItem('userShoppingCart', JSON.stringify(shoppingCartNewQuantity));
     totalPrice(shoppingCartNewQuantity);
   };
 
