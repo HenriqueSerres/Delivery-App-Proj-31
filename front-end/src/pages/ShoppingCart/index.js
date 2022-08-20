@@ -19,7 +19,7 @@ function ShoppingCart() {
   const history = useHistory();
 
   const calculateTotalPrice = (cart) => cart
-      .reduce((acc, curr) => acc + Number(curr.quantity) * Number(curr.price), 0);
+    .reduce((acc, curr) => acc + Number(curr.quantity) * Number(curr.price), 0);
 
   useEffect(() => {
     const shoppingCart = JSON.parse(localStorage.getItem('carrinho'))
