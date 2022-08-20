@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-function ProductsItem({ product, setTotal, shoppingCart }) {
-  const { id, price, name, urlImage } = product;
-
+function ProductsItem({ product, setTotal }) {
   const [valuePrice, setValuePrice] = useState(0);
 
+  const { id, price, name, urlImage } = product;
+
   const calculateTotalPrice = (cart) => cart
-    .reduce((acc, curr) => acc + Number(curr.quantity) * Number(curr.price), 0)
-    .toFixed(2);
+    .reduce((acc, curr) => acc + Number(curr.quantity) * Number(curr.price), 0);
 
   const totalPrice = (cart) => setTotal(calculateTotalPrice(cart));
 
-  const decreaseQuantity = (nameItem, shoppingCartItem) => {
+  const decreaseQuantity = (nameItem) => {
+    const storageShoppingCart = JSON.parse(localStorage.getItem('carrinho')) || [];
     let store;
-    const shoppingCartNewQuantity = shoppingCartItem.map((item) => {
-      if (item.name === nameItem && item.quantity !== 0) {
-        item.quantity -= 1;
+    const shoppingCartNewQuantity = storageShoppingCart.map((item) => {
+      if (item.name === nameItem) {
+        item.quantity -= item.quantity === 0 ? 0 : 1;
         store = item.quantity;
       }
       return item;
@@ -26,9 +26,10 @@ function ProductsItem({ product, setTotal, shoppingCart }) {
     return store;
   };
 
-  const increaseQuantity = (nameItem, shoppingCartItems) => {
+  const increaseQuantity = (nameItem) => {
+    const storageShoppingCart = JSON.parse(localStorage.getItem('carrinho')) || [];
     let store;
-    const shoppingCartNewQuantity = shoppingCartItems.map((item) => {
+    const shoppingCartNewQuantity = storageShoppingCart.map((item) => {
       if (item.name === nameItem) {
         item.quantity += 1;
         store = item.quantity;
@@ -41,44 +42,43 @@ function ProductsItem({ product, setTotal, shoppingCart }) {
   };
 
   const handleChange = ({ value }) => {
-    const shoppingCartNewQuantity = shoppingCart.map((item) => {
-      if (item.name === name) {
+    const storageShoppingCart = JSON.parse(localStorage.getItem('carrinho')) || [];
+    const shoppingCartNewQuantity = storageShoppingCart.map((elementObj) => {
+      const item = { ...elementObj };
+      if (item.id === id) {
         item.quantity = Number(value);
         setValuePrice(item.quantity);
       }
       return item;
     });
-    console.log(1);
+    localStorage.setItem('carrinho', JSON.stringify(shoppingCartNewQuantity));
     totalPrice(shoppingCartNewQuantity);
   };
 
   return (
     <div>
-      Imagem
       <img
         src={ urlImage }
-        alt=""
+        alt="product-id"
         data-testid={ `customer_products__img-card-bg-image-${id}` }
       />
-      {/* name */}
       {/* Name */}
       <h3 data-testid={ `customer_products__element-card-title-${id}` }>{name}</h3>
       {/* Preço */}
       <p data-testid={ `customer_products__element-card-price-${id}` }>
         R$
-        {' '}
-        {price.replace('.', ',')}
+        {` ${price.replace('.', ',')}`}
       </p>
       <article>
         <button
           type="button"
           data-testid={ `customer_products__button-card-rm-item-${id}` }
-          onClick={ () => setValuePrice(decreaseQuantity(name, shoppingCart)) }
+          onClick={ () => setValuePrice(decreaseQuantity(name)) }
         >
           -
         </button>
         <input
-          type="text"
+          type="number"
           id="input-quantity"
           data-testid={ `customer_products__input-card-quantity-${id}` }
           value={ valuePrice }
@@ -87,7 +87,7 @@ function ProductsItem({ product, setTotal, shoppingCart }) {
         <button
           type="button"
           data-testid={ `customer_products__button-card-add-item-${id}` }
-          onClick={ () => setValuePrice(increaseQuantity(name, shoppingCart)) }
+          onClick={ () => setValuePrice(increaseQuantity(name)) }
         >
           +
         </button>
