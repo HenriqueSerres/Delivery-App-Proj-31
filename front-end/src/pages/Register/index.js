@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import validateEmail from '../../helpers/data';
-
 import Input from '../../components/GenericInput';
-
 import { axiosRequest } from '../../services/index';
 import { URL_REGISTER, MIN_LENGTH_LOGIN } from '../../helpers/constants';
 
@@ -14,6 +12,7 @@ function Register() {
   const [emailRegister, setEmailRegister] = useState('');
   const [passwordRegister, setPasswordRegister] = useState('');
   const [disabledRegister, setDisabledRegister] = useState(true);
+  const [stateUserAlreadyExist, setStateUserAlreadyExist] = useState(false);
 
   useEffect(() => {
     const nameCheck = nameRegister.length >= 2 * MIN_LENGTH_LOGIN;
@@ -28,22 +27,25 @@ function Register() {
 
   const history = useHistory();
 
-  const handleClick = async () => {
-    const postRegisterInfo = await axiosRequest(URL_REGISTER, 'POST', {
+  const handleClick = () => {
+    axiosRequest(URL_REGISTER, 'POST', {
       name: nameRegister,
       email: emailRegister,
       password: passwordRegister,
       role: 'customer',
-    });
-    if (postRegisterInfo.message !== undefined
-      && (postRegisterInfo.message.includes('400')
-      || postRegisterInfo.message.includes('409'))
-    ) return;
-    const { name, email, role, token } = postRegisterInfo.data;
-    localStorage.setItem('user', JSON.stringify({ name, email, role, token }));
-    if (postRegisterInfo.status === STATUS_CODE_CREATED) {
-      history.push('/customer/products');
-    }
+    }).then((res) => {
+      if (res.message) {
+        const { response } = res;
+        if (response.status === 400) return;
+        if (response.status === 409) return setStateUserAlreadyExist(true);
+      }
+      setStateUserAlreadyExist(false);
+      const { name, email, role, token } = res.data;
+      localStorage.setItem('user', JSON.stringify({ name, email, role, token }));
+      if (res.status === STATUS_CODE_CREATED) {
+        history.push('/customer/products');
+      }
+    }).catch((error) => console.log(error));
   };
 
   return (
@@ -88,6 +90,7 @@ function Register() {
         </button>
         <p data-testid="common_register__element-invalid_register" />
       </form>
+      <div style={ { display: stateUserAlreadyExist ? 'block' : 'none' } }>Usuário já existe !</div>
     </div>
   );
 }
