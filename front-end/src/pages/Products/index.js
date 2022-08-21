@@ -1,37 +1,29 @@
-import React, { useState, useEffect, useContext } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getAxiosRequest } from '../../services/index';
-
 import Header from '../../components/Products/Header';
-
 import ProductsItem from '../../components/Products/ProductsItem';
-import Context from '../../context/Context';
-
 import './styles.css';
-
-const eleven = 11;
 
 function Products() {
   const [productsData, setProductsData] = useState([]);
-  const { total, setShoppingCart } = useContext(Context);
+  const [total, setTotal] = useState(0);
 
   const history = useHistory();
 
   useEffect(() => {
-    const getInfoProducts = async () => {
-      const getData = await getAxiosRequest();
-      setProductsData(getData);
-      const shoppingCartData = getData.slice(0, eleven).map(({ name, price, id }) => ({
-        name,
-        price,
-        quantity: 0,
-        id,
-      }));
-      setShoppingCart(shoppingCartData);
-    };
-    getInfoProducts();
-  }, [setShoppingCart]);
+    getAxiosRequest().then((response) => {
+      const shoppingCartData = response.slice(0, response.length)
+        .map(({ name, price, id }) => ({
+          name,
+          price,
+          quantity: 0,
+          id,
+        }));
+      localStorage.setItem('userShoppingCart', JSON.stringify(shoppingCartData));
+      setProductsData(response);
+    });
+  }, []);
 
   return (
     <div className="main-products">
@@ -39,7 +31,11 @@ function Products() {
       <div>
         {productsData !== undefined
           && productsData.map((product) => (
-            <ProductsItem product={ product } key={ product.id } />
+            <ProductsItem
+              product={ product }
+              setTotal={ setTotal }
+              key={ product.id }
+            />
           ))}
       </div>
       <button
@@ -49,7 +45,8 @@ function Products() {
         onClick={ () => history.push('/customer/checkout') }
       >
         <span data-testid="customer_products__checkout-bottom-value">
-          {`Ver Carrinho: ${total.toString().replace('.', ',')}`}
+          Ver Carrinho:
+          { ` ${total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}` }
         </span>
       </button>
     </div>

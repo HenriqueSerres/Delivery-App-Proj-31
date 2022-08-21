@@ -1,59 +1,90 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import Context from '../../../context/Context';
-
-function ProductsItem({ product }) {
-  const { id, price, name, urlImage } = product;
-
+function ProductsItem({ product, setTotal }) {
   const [valuePrice, setValuePrice] = useState(0);
 
-  const {
-    increaseQuantity,
-    decreaseQuantity,
-    shoppingCart,
-    totalPrice,
-  } = useContext(Context);
+  const { id, price, name, urlImage } = product;
+
+  const calculateTotalPrice = (cart) => cart
+    .reduce((acc, curr) => acc + Number(curr.quantity) * Number(curr.price), 0);
+
+  const totalPrice = (cart) => setTotal(calculateTotalPrice(cart));
+
+  const decreaseQuantity = (nameItem) => {
+    const storageShoppingCart = JSON.parse(
+      localStorage.getItem('userShoppingCart'),
+    ) || [];
+    let store;
+    const shoppingCartNewQuantity = storageShoppingCart.map((item) => {
+      if (item.name === nameItem) {
+        item.quantity -= item.quantity === 0 ? 0 : 1;
+        store = item.quantity;
+      }
+      return item;
+    });
+    totalPrice(shoppingCartNewQuantity);
+    localStorage.setItem('userShoppingCart', JSON.stringify(shoppingCartNewQuantity));
+    return store;
+  };
+
+  const increaseQuantity = (nameItem) => {
+    const storageShoppingCart = JSON.parse(
+      localStorage.getItem('userShoppingCart'),
+    ) || [];
+    let store;
+    const shoppingCartNewQuantity = storageShoppingCart.map((item) => {
+      if (item.name === nameItem) {
+        item.quantity += 1;
+        store = item.quantity;
+      }
+      return item;
+    });
+    totalPrice(shoppingCartNewQuantity);
+    localStorage.setItem('userShoppingCart', JSON.stringify(shoppingCartNewQuantity));
+    return store;
+  };
 
   const handleChange = ({ value }) => {
-    const shoppingCartNewQuantity = shoppingCart.map((item) => {
-      if (item.name === name) {
+    const storageShoppingCart = JSON.parse(
+      localStorage.getItem('userShoppingCart'),
+    ) || [];
+    const shoppingCartNewQuantity = storageShoppingCart.map((elementObj) => {
+      const item = { ...elementObj };
+      if (item.id === id) {
         item.quantity = Number(value);
         setValuePrice(item.quantity);
       }
       return item;
     });
-    console.log(1);
+    localStorage.setItem('userShoppingCart', JSON.stringify(shoppingCartNewQuantity));
     totalPrice(shoppingCartNewQuantity);
   };
 
   return (
     <div>
-      Imagem
       <img
         src={ urlImage }
-        alt=""
+        alt="product-id"
         data-testid={ `customer_products__img-card-bg-image-${id}` }
       />
-      {/* name */}
       {/* Name */}
       <h3 data-testid={ `customer_products__element-card-title-${id}` }>{name}</h3>
       {/* Preço */}
       <p data-testid={ `customer_products__element-card-price-${id}` }>
         R$
-        {' '}
-        {price.replace('.', ',')}
+        {` ${price.replace('.', ',')}`}
       </p>
       <article>
         <button
           type="button"
           data-testid={ `customer_products__button-card-rm-item-${id}` }
-          onClick={ () => setValuePrice(decreaseQuantity(name, shoppingCart)) }
+          onClick={ () => setValuePrice(decreaseQuantity(name)) }
         >
           -
         </button>
         <input
-          type="text"
+          type="number"
           id="input-quantity"
           data-testid={ `customer_products__input-card-quantity-${id}` }
           value={ valuePrice }
@@ -62,7 +93,7 @@ function ProductsItem({ product }) {
         <button
           type="button"
           data-testid={ `customer_products__button-card-add-item-${id}` }
-          onClick={ () => setValuePrice(increaseQuantity(name, shoppingCart)) }
+          onClick={ () => setValuePrice(increaseQuantity(name)) }
         >
           +
         </button>

@@ -15,6 +15,7 @@ function OrderCard({
 }) {
   const history = useHistory();
   const userRoleFormatted = userRole.toLowerCase();
+  const statusFormatted = status.toLowerCase();
   const styleOrderStatus = (orderStatus) => {
     let result = {};
     switch (orderStatus) {
@@ -59,14 +60,14 @@ function OrderCard({
         <div className="button-card-info-1">
           <div
             className="button-card-info-1-order-status"
-            style={ styleOrderStatus(status) }
+            style={ styleOrderStatus(statusFormatted) }
           >
             <span
               data-testid={
                 `${userRoleFormatted}_orders__element-delivery-status-${orderId}`
               }
             >
-              { status.toUpperCase() }
+              { status }
             </span>
           </div>
           <div className="button-card-info-1-date-price">
@@ -79,7 +80,7 @@ function OrderCard({
               data-testid={ `${userRoleFormatted}_orders__element-card-price-${orderId}` }
             >
               {
-                totalPrice.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+                totalPrice.toFixed(2).replace(/\./, ',')
               }
             </div>
           </div>

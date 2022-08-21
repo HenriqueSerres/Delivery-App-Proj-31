@@ -23,7 +23,6 @@ function Header() {
       }));
       break;
     case 'seller':
-      console.log('seller');
       setStateRenderButtons(() => ({
         orderButton: true,
       }));

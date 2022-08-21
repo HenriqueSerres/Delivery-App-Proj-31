@@ -1,24 +1,19 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import validateEmail from '../../helpers/data';
 
-import Context from '../../context/Context';
 import Input from '../../components/GenericInput';
 
 import { axiosRequest } from '../../services/index';
-import { URL_LOGIN } from '../../helpers/constants';
+import { URL_LOGIN, MIN_LENGTH_LOGIN } from '../../helpers/constants';
 
 const STATUS_CODE_OK = 200;
 
 function Login() {
   const [verify, setVerify] = useState(false);
-
-  const {
-    emailLogin,
-    setEmailLogin,
-    passwordLogin,
-    setPasswordLogin,
-    disabledLogin,
-  } = useContext(Context);
+  const [emailLogin, setEmailLogin] = useState('');
+  const [passwordLogin, setPasswordLogin] = useState('');
+  const [disabledLogin, setDisabledLogin] = useState(true);
 
   const history = useHistory();
 
@@ -37,24 +32,41 @@ function Login() {
       break;
 
     default:
+      history.push('/register');
       break;
     }
   };
 
-  const handleClick = async () => {
-    const postLoginInfo = await axiosRequest(URL_LOGIN, 'POST', {
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('user'));
+    if (userData) redirectUser(userData.role);
+  }, []);
+
+  useEffect(() => {
+    const emailCheck = validateEmail(emailLogin);
+    const passwordCheck = passwordLogin.length >= MIN_LENGTH_LOGIN;
+    if (emailCheck && passwordCheck) {
+      setDisabledLogin(false);
+    } else {
+      setDisabledLogin(true);
+    }
+  }, [emailLogin, passwordLogin]);
+
+  const handleClick = () => {
+    axiosRequest(URL_LOGIN, 'POST', {
       email: emailLogin,
       password: passwordLogin,
-    });
-    if (
-      postLoginInfo.message !== undefined
-      && postLoginInfo.message.includes('404')
-    ) return setVerify(true);
-    const { name, email, role, token } = postLoginInfo.data;
-    localStorage.setItem('user', JSON.stringify({ name, email, role, token }));
-    if (postLoginInfo.status === STATUS_CODE_OK) {
-      redirectUser(role);
-    }
+    }).then((response) => {
+      if (
+        response.message !== undefined
+        && response.message.includes('404')
+      ) return setVerify(true);
+      const { name, email, role, token } = response.data;
+      localStorage.setItem('user', JSON.stringify({ name, email, role, token }));
+      if (response.status === STATUS_CODE_OK) {
+        redirectUser(role);
+      }
+    }).catch((error) => console.log(error));
   };
 
   return (
