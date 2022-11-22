@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import validateEmail from '../../helpers/data';
-import Input from '../../components/GenericInput';
-import { axiosRequest } from '../../services/index';
+import validateEmail from '../helpers/data';
+import Input from '../components/GenericInput';
+import { axiosRequest } from '../services/index';
 import {
   URL_REGISTER,
   MIN_LENGTH_LOGIN,
   HTTP_BADREQUEST,
   HTTP_CONFLICT,
-} from '../../helpers/constants';
+} from '../helpers/constants';
 
 const STATUS_CODE_CREATED = 201;
 

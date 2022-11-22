@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import validateEmail from '../../helpers/data';
+import validateEmail from '../helpers/data';
 
-import Input from '../../components/GenericInput';
+import Input from '../components/GenericInput';
 
-import { axiosRequest } from '../../services/index';
-import { URL_LOGIN, MIN_LENGTH_LOGIN } from '../../helpers/constants';
+import { axiosRequest } from '../services/index';
+import { URL_LOGIN, MIN_LENGTH_LOGIN } from '../helpers/constants';
 
 const STATUS_CODE_OK = 200;
 

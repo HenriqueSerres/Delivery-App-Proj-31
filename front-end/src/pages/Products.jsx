@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getAxiosRequest } from '../../services/index';
-import Header from '../../components/Products/Header';
-import ProductsItem from '../../components/Products/ProductsItem';
+import { getAxiosRequest } from '../services/index';
+import Header from '../components/Products/Header';
+import ProductsItem from '../components/Products/ProductsItem';
 import './styles.css';
 
 function Products() {
@@ -13,7 +13,7 @@ function Products() {
 
   useEffect(() => {
     getAxiosRequest().then((response) => {
-      const shoppingCartData = response.slice(0, response.length)
+      const shoppingCartData = response?.slice(0, response.length)
         .map(({ name, price, id }) => ({
           name,
           price,
